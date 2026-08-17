@@ -17,6 +17,9 @@ const curatedEnglish: Record<string, string> = {
   "北页": "Beiye",
   "别骂了": "Critique Me",
   "胶囊办公室": "Capsule Office",
+  "胶囊办公室宽屏版本的像素办公室与真实终端控制界面":
+    "Capsule Office wide-screen interface with its pixel office and real terminal controls",
+  "当前版 · 像素办公室与真实终端": "Current · Pixel office with real terminal controls",
   "悄醒": "HushWake",
   "心镜拾光": "Arcana Mirror",
   "生者未明": "Unverified Survivors",
