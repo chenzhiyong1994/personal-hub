@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+import { useI18n } from "../i18n/i18n";
 
 const LINKS = [
   { href: "#impact", index: "01", label: "履历", en: "Track Record" },
@@ -13,6 +14,8 @@ const LINKS = [
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isLanguagePending, startLanguageTransition] = useTransition();
+  const { language, setLanguage, t } = useI18n();
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.4 });
@@ -38,29 +41,44 @@ export function Navigation() {
     };
   }, [open]);
 
+  const switchLanguage = () => {
+    startLanguageTransition(() => setLanguage(language === "en" ? "zh" : "en"));
+  };
+
   return (
     <>
       <header className={`nav${scrolled ? " nav--scrolled" : ""}`}>
         <div className="nav__bar">
-          <a className="nav__logo" href="#top" aria-label="回到顶部">
+          <a className="nav__logo" href="#top" aria-label={t("回到顶部")}>
             <span className="nav__logo-dot" aria-hidden="true" />
-            陈志勇
+            {language === "en" ? "Zhiyong Chen" : "陈志勇"}
           </a>
-          <nav className="nav__links" aria-label="页面导航">
+          <nav className="nav__links" aria-label={t("页面导航")}>
             {LINKS.map((link) => (
               <a className="nav__link" href={link.href} key={link.href}>
                 <sup>{link.index}</sup>
-                {link.label}
+                {language === "en" ? link.en : link.label}
               </a>
             ))}
           </nav>
+          <button
+            className="nav__language"
+            type="button"
+            aria-label={language === "en" ? "Switch to Chinese" : "切换到英文"}
+            aria-busy={isLanguagePending}
+            onClick={switchLanguage}
+          >
+            <span className={language === "en" ? "is-active" : undefined}>EN</span>
+            <i aria-hidden="true">/</i>
+            <span className={language === "zh" ? "is-active" : undefined}>中</span>
+          </button>
           <a className="nav__cta" href="mailto:chenzy94@sina.com">
-            联系我
+            {t("联系我")}
           </a>
           <button
             className="nav__burger"
             aria-expanded={open}
-            aria-label={open ? "关闭菜单" : "打开菜单"}
+            aria-label={open ? t("关闭菜单") : t("打开菜单")}
             onClick={() => setOpen((v) => !v)}
           >
             <span />
@@ -74,7 +92,7 @@ export function Navigation() {
         {open && (
           <motion.nav
             className="nav__overlay"
-            aria-label="移动端导航"
+            aria-label={t("移动端导航")}
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={reduce ? undefined : { opacity: 0 }}
@@ -90,8 +108,8 @@ export function Navigation() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={reduce ? { duration: 0 } : { delay: 0.05 + i * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               >
-                <small>{link.en}</small>
-                {link.label}
+                <small>{link.index}</small>
+                {language === "en" ? link.en : link.label}
               </motion.a>
             ))}
             <motion.a
@@ -102,7 +120,7 @@ export function Navigation() {
               transition={reduce ? { duration: 0 } : { delay: 0.32, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
               <small>Mail</small>
-              联系我
+              {t("联系我")}
             </motion.a>
           </motion.nav>
         )}

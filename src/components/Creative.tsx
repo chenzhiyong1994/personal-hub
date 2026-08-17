@@ -1,4 +1,5 @@
 import { articles, creativeChannels, type CreativeChannel } from "../data/siteContent";
+import { useI18n, useLocalized } from "../i18n/i18n";
 import { Reveal } from "./Reveal";
 
 const ACCENT_VAR: Record<CreativeChannel["accent"], string> = {
@@ -11,6 +12,7 @@ const ACCENT_VAR: Record<CreativeChannel["accent"], string> = {
 };
 
 function ChannelRow({ channel }: { channel: CreativeChannel }) {
+  const { language, t } = useI18n();
   const inner = (
     <>
       <span className="channel__index" aria-hidden="true">
@@ -29,7 +31,7 @@ function ChannelRow({ channel }: { channel: CreativeChannel }) {
           ↗
         </span>
       ) : (
-        <span className="channel__soon">待发布</span>
+        <span className="channel__soon">{t("待发布")}</span>
       )}
     </>
   );
@@ -43,7 +45,9 @@ function ChannelRow({ channel }: { channel: CreativeChannel }) {
       target="_blank"
       rel="noreferrer"
       style={style}
-      aria-label={`${channel.title}（${channel.linkLabel ?? "查看作品"}，新窗口打开）`}
+      aria-label={language === "en"
+        ? `${channel.title} — ${channel.linkLabel ?? t("查看作品")}, opens in a new window`
+        : `${channel.title}（${channel.linkLabel ?? "查看作品"}，新窗口打开）`}
     >
       {inner}
     </a>
@@ -55,18 +59,22 @@ function ChannelRow({ channel }: { channel: CreativeChannel }) {
 }
 
 export function Creative() {
+  const { t } = useI18n();
+  const channels = useLocalized(creativeChannels);
+  const localizedArticles = useLocalized(articles);
+
   return (
     <section className="section" id="creative">
       <div className="wrap">
         <Reveal>
           <header className="section-head">
             <span className="section-head__index">05</span>
-            <h2 className="section-head__title">创作矩阵</h2>
+            <h2 className="section-head__title">{t("创作矩阵")}</h2>
             <span className="section-head__en">Creative Output — Things I Keep Making</span>
           </header>
         </Reveal>
 
-        {creativeChannels.map((c, i) => (
+        {channels.map((c, i) => (
           <Reveal key={c.title} delay={i * 0.03}>
             <ChannelRow channel={c} />
           </Reveal>
@@ -74,8 +82,8 @@ export function Creative() {
 
         <Reveal>
           <div className="articles">
-            <h3 className="articles__title">精选文章 / Selected Writing</h3>
-            {articles.map((a) => (
+            <h3 className="articles__title">{t("精选文章 / Selected Writing")}</h3>
+            {localizedArticles.map((a) => (
               <a className="article" href={a.href} target="_blank" rel="noreferrer" key={a.href}>
                 <span className="article__tag">{a.tag}</span>
                 <span className="article__name">{a.title}</span>

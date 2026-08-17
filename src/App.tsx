@@ -8,12 +8,15 @@ import { Navigation } from "./components/Navigation";
 import { Timeline } from "./components/Timeline";
 import { WorkSystems } from "./components/WorkSystems";
 import { Works } from "./components/Works";
+import { useI18n } from "./i18n/i18n";
 
 function App() {
+  const { t } = useI18n();
+
   return (
     <>
       <a className="skip-link" href="#main-content">
-        跳到主要内容
+        {t("跳到主要内容")}
       </a>
       <Navigation />
       <main id="main-content">

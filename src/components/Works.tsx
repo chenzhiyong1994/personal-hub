@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { projects, type Project } from "../data/siteContent";
+import { useI18n, useLocalized } from "../i18n/i18n";
 import { Reveal } from "./Reveal";
 
 const TONE_VAR: Record<Project["tone"], string> = {
@@ -17,6 +18,8 @@ const SOURCE_LABEL = {
 } as const;
 
 function ProjectDossier({ project }: { project: Project }) {
+  const { t } = useI18n();
+
   return (
     <article
       className="dossier"
@@ -34,33 +37,33 @@ function ProjectDossier({ project }: { project: Project }) {
 
       <div className="dossier__grid">
         <section className="dossier__challenge">
-          <span>最初想解决什么</span>
+          <span>{t("最初想解决什么")}</span>
           <h4>{project.challenge}</h4>
         </section>
 
         <section>
-          <span>做过的关键选择</span>
+          <span>{t("做过的关键选择")}</span>
           <ol className="dossier__decisions">
             {project.decisions?.map((decision) => <li key={decision}>{decision}</li>)}
           </ol>
         </section>
 
         <section>
-          <span>我和 AI 怎么分工</span>
+          <span>{t("我和 AI 怎么分工")}</span>
           <div className="ownership">
             <div>
-              <b>我负责</b>
+              <b>{t("我负责")}</b>
               <p>{project.ownership?.human}</p>
             </div>
             <div>
-              <b>AI 参与</b>
+              <b>{t("AI 参与")}</b>
               <p>{project.ownership?.ai}</p>
             </div>
           </div>
         </section>
 
         <section>
-          <span>我怎么确认它真的能用</span>
+          <span>{t("我怎么确认它真的能用")}</span>
           <ul className="dossier__checks">
             {project.verification?.map((item) => <li key={item}>{item}</li>)}
           </ul>
@@ -69,7 +72,7 @@ function ProjectDossier({ project }: { project: Project }) {
 
       <footer className="dossier__foot">
         <div>
-          <span>现在做到哪里</span>
+          <span>{t("现在做到哪里")}</span>
           <p>{project.boundary}</p>
           {project.note && <p className="dossier__note">P.S. {project.note}</p>}
         </div>
@@ -93,8 +96,10 @@ export function Works() {
   const [slideIndex, setSlideIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const reduce = useReducedMotion();
+  const { language, t } = useI18n();
+  const localizedProjects = useLocalized(projects);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const active = projects[activeIndex];
+  const active = localizedProjects[activeIndex];
   const gallery = active.gallery ?? [];
   const resolvedSlideIndex = Math.min(slideIndex, Math.max(gallery.length - 1, 0));
   const slide = gallery[resolvedSlideIndex];
@@ -119,10 +124,10 @@ export function Works() {
     if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
     event.preventDefault();
     let next = activeIndex;
-    if (event.key === "ArrowDown") next = (activeIndex + 1) % projects.length;
-    if (event.key === "ArrowUp") next = (activeIndex - 1 + projects.length) % projects.length;
+    if (event.key === "ArrowDown") next = (activeIndex + 1) % localizedProjects.length;
+    if (event.key === "ArrowUp") next = (activeIndex - 1 + localizedProjects.length) % localizedProjects.length;
     if (event.key === "Home") next = 0;
-    if (event.key === "End") next = projects.length - 1;
+    if (event.key === "End") next = localizedProjects.length - 1;
     selectProject(next);
     tabRefs.current[next]?.focus();
   };
@@ -142,7 +147,7 @@ export function Works() {
         <Reveal>
           <header className="section-head">
             <span className="section-head__index">02</span>
-            <h2 className="section-head__title">产品实践</h2>
+            <h2 className="section-head__title">{t("产品实践")}</h2>
             <span className="section-head__en">Selected Work — Ideas Taken Far Enough to Test</span>
           </header>
         </Reveal>
@@ -150,8 +155,7 @@ export function Works() {
         <Reveal>
           <div className="project-lab__intro">
             <p>
-              工作项目有人定目标、有人排期。这里的八个项目，大多只是我某天冒出的一个念头：要不做个东西试试？
-              没人催，我就自己把界面、代码和那些意外报错一点点补齐。做成什么样、为什么停在这里，也都如实放着。
+              {t("工作项目有人定目标、有人排期。这里的八个项目，大多只是我某天冒出的一个念头：要不做个东西试试？没人催，我就自己把界面、代码和那些意外报错一点点补齐。做成什么样、为什么停在这里，也都如实放着。")}
             </p>
             <span>8 PROJECTS / REAL SCREENS INSIDE</span>
           </div>
@@ -162,11 +166,11 @@ export function Works() {
             <div
               className="project-index"
               role="tablist"
-              aria-label="项目列表"
+              aria-label={t("项目列表")}
               aria-orientation="vertical"
               onKeyDown={handleTabsKeyDown}
             >
-              {projects.map((project, index) => (
+              {localizedProjects.map((project, index) => (
                 <button
                   className="project-index__item"
                   id={`project-tab-${project.id}`}
@@ -216,7 +220,9 @@ export function Works() {
                       className="project-gallery"
                       tabIndex={0}
                       onKeyDown={handleGalleryKeyDown}
-                      aria-label={`${active.name}界面图集，第 ${resolvedSlideIndex + 1} 张，共 ${gallery.length} 张`}
+                      aria-label={language === "en"
+                        ? `${active.name} interface gallery, image ${resolvedSlideIndex + 1} of ${gallery.length}`
+                        : `${active.name}界面图集，第 ${resolvedSlideIndex + 1} 张，共 ${gallery.length} 张`}
                     >
                       <div className="project-gallery__viewport">
                         <AnimatePresence mode="wait">
@@ -236,8 +242,8 @@ export function Works() {
                         </div>
                         {gallery.length > 1 && (
                           <div className="project-gallery__arrows">
-                            <button type="button" onClick={() => showSlide(resolvedSlideIndex - 1)} aria-label="上一张界面截图">←</button>
-                            <button type="button" onClick={() => showSlide(resolvedSlideIndex + 1)} aria-label="下一张界面截图">→</button>
+                            <button type="button" onClick={() => showSlide(resolvedSlideIndex - 1)} aria-label={t("上一张界面截图")}>←</button>
+                            <button type="button" onClick={() => showSlide(resolvedSlideIndex + 1)} aria-label={t("下一张界面截图")}>→</button>
                           </div>
                         )}
                       </div>
@@ -246,12 +252,14 @@ export function Works() {
                         <span>{String(resolvedSlideIndex + 1).padStart(2, "0")} / {String(gallery.length).padStart(2, "0")}</span>
                       </figcaption>
                       {gallery.length > 1 && (
-                        <div className="project-gallery__rail" aria-label="选择界面截图">
+                        <div className="project-gallery__rail" aria-label={t("选择界面截图")}>
                           {gallery.map((image, index) => (
                             <button
                               type="button"
                               key={image.src}
-                              aria-label={`查看第 ${index + 1} 张：${image.caption}`}
+                              aria-label={language === "en"
+                                ? `View image ${index + 1}: ${image.caption}`
+                                : `查看第 ${index + 1} 张：${image.caption}`}
                               aria-current={index === resolvedSlideIndex ? "true" : undefined}
                               onClick={() => showSlide(index)}
                             >
@@ -285,7 +293,7 @@ export function Works() {
                 aria-controls={`dossier-${active.id}`}
                 onClick={() => setExpanded((value) => !value)}
               >
-                <span>{expanded ? "收起项目细节" : "继续看我怎么做的"}</span>
+                <span>{expanded ? t("收起项目细节") : t("继续看我怎么做的")}</span>
                 <i aria-hidden="true">{expanded ? "−" : "+"}</i>
               </button>
             </div>

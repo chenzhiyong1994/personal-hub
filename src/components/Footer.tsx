@@ -1,4 +1,5 @@
 import { Reveal } from "./Reveal";
+import { useI18n, useLocalized } from "../i18n/i18n";
 
 const SOCIAL = [
   { label: "知乎 · 卡北的思想瓜摊", href: "https://www.zhihu.com/people/chen-zhi-yong-80-97/posts" },
@@ -8,16 +9,20 @@ const SOCIAL = [
 ];
 
 export function Footer() {
+  const { language, t } = useI18n();
+  const social = useLocalized(SOCIAL);
+
   return (
     <footer className="footer" id="contact">
       <div className="footer__inner">
         <Reveal>
-          <p className="footer__kicker">Contact — 合作、机会、或者只是聊聊</p>
+          <p className="footer__kicker">{t("Contact — 合作、机会、或者只是聊聊")}</p>
           <h2 className="footer__title">
-            一起做点
-            <br />
-            <em>有意思的</em>
-            东西。
+            {language === "en" ? (
+              <>Let's make<br /><em>something meaningful.</em></>
+            ) : (
+              <>一起做点<br /><em>有意思的</em>东西。</>
+            )}
           </h2>
           <a className="footer__mail" href="mailto:chenzy94@sina.com">
             chenzy94@sina.com
@@ -27,7 +32,7 @@ export function Footer() {
 
         <Reveal delay={0.1}>
           <div className="footer__links">
-            {SOCIAL.map((s) => (
+            {social.map((s) => (
               <a className="footer__link" href={s.href} target="_blank" rel="noreferrer" key={s.href}>
                 {s.label}
               </a>

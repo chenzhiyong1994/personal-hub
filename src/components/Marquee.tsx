@@ -1,4 +1,7 @@
+import { useI18n } from "../i18n/i18n";
+
 export function Marquee() {
+  const { t } = useI18n();
   const items = [
     "产品判断",
     "从判断到交付",
@@ -10,7 +13,7 @@ export function Marquee() {
     "HUMAN × AI",
     "0 → 1",
   ];
-  const row = [...items, ...items];
+  const row = [...items, ...items].map(t);
   return (
     <div className="marquee" aria-hidden="true">
       <div className="marquee__track">

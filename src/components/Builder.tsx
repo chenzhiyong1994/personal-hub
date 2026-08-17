@@ -1,12 +1,15 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { builderModes } from "../data/siteContent";
+import { useI18n, useLocalized } from "../i18n/i18n";
 import { Reveal } from "./Reveal";
 
 export function Builder() {
   const [active, setActive] = useState(builderModes[0].id);
   const reduce = useReducedMotion();
-  const current = builderModes.find((m) => m.id === active) ?? builderModes[0];
+  const { t } = useI18n();
+  const modes = useLocalized(builderModes);
+  const current = modes.find((m) => m.id === active) ?? modes[0];
 
   return (
     <section className="section builder" id="builder">
@@ -14,15 +17,15 @@ export function Builder() {
         <Reveal>
           <header className="section-head">
             <span className="section-head__index">04</span>
-            <h2 className="section-head__title">从判断到交付</h2>
+            <h2 className="section-head__title">{t("从判断到交付")}</h2>
             <span className="section-head__en">Human-led, AI-assisted — Frame to Ship</span>
           </header>
         </Reveal>
 
         <div className="builder__layout">
           <Reveal>
-            <div className="builder__tabs" role="tablist" aria-label="构建能力阶段">
-              {builderModes.map((mode) => (
+            <div className="builder__tabs" role="tablist" aria-label={t("构建能力阶段")}>
+              {modes.map((mode) => (
                 <button
                   key={mode.id}
                   role="tab"
