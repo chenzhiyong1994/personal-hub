@@ -1,0 +1,42 @@
+name: 缺陷报告
+description: 报告可复现的显示、交互、构建或可访问性问题
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: 感谢反馈。涉及隐私、凭证或未公开漏洞时，请改用 Security 私下报告。
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述
+      description: 实际发生了什么？
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开……
+        2. 点击……
+        3. 观察到……
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: 环境
+      description: 浏览器、操作系统、视口尺寸和 Node.js 版本（如适用）
+      placeholder: Chrome / Windows 11 / 390 × 844 / Node.js 20.19
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 补充证据
+      description: 可附截图、控制台信息或最小复现；请先移除个人信息。

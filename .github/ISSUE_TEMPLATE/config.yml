@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 安全与隐私报告
+    url: https://github.com/chenzhiyong1994/personal-hub/security/advisories/new
+    about: 请私下报告凭证、个人信息或未公开漏洞。
