@@ -53,6 +53,6 @@ pnpm run build
 
 ## 部署
 
-- 用户已授权使用 Cloudflare 托管与维护主页；采用 Workers Static Assets，部署配置见 `wrangler.jsonc`，接入及更新方法见 `docs/deployment.md`。
-- 公开仓库推送前执行 `safe-open-source-release`；连接 Workers Builds 后，`main` 的推送会更新正式站点。
+- 用户已授权使用 Cloudflare Pages 免费托管主页；只上传构建后的静态文件，不连接 GitHub、不申请仓库权限、不配置自动部署。更新方法见 `docs/deployment.md`。
+- 发布网站与维护 Git 仓库分别处理；用户请求静态发布不意味着授权额外的仓库推送或云端代码维护。
 - 不添加分析、表单、追踪、数据库或付费服务，除非用户另行明确要求。

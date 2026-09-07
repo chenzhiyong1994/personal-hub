@@ -64,7 +64,7 @@
 
 ## 快速开始
 
-需要 Node.js 22+ 与 pnpm 11；构建版本固定在 `.node-version` 和 `package.json` 中。
+需要 Node.js 20.19+ 与 pnpm 10。
 
 ```bash
 git clone https://github.com/chenzhiyong1994/personal-hub.git
@@ -82,9 +82,9 @@ pnpm run build
 
 ## Cloudflare 托管
 
-部署使用 Workers Static Assets，`wrangler.jsonc` 指定发布 `dist/`。连接 Workers Builds 后，`main` 分支的推送会自动构建并更新正式站点。
+使用 Cloudflare Pages 的 Direct Upload 上传 `dist/` 构建产物，不连接 GitHub 或自动部署。
 
-运行 `pnpm run deploy:check` 可在本地检查部署产物，`pnpm run preview:cloudflare` 可预览 Cloudflare 的资源路由。首次连接、日常更新及回滚见 [`docs/deployment.md`](./docs/deployment.md)。
+先运行 `pnpm run build`，再上传生成的静态文件。发布与更新方式见 [`docs/deployment.md`](./docs/deployment.md)。
 
 ## 项目结构
 

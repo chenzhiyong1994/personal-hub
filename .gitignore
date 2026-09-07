@@ -3,9 +3,6 @@ dist/
 .vite/
 .tmp-shots/
 coverage/
-.wrangler/
-.dev.vars
-.dev.vars.*
 .env
 .env.*
 !.env.example
