@@ -82,6 +82,8 @@ pnpm run build
 
 ## Cloudflare 托管
 
+公开主页：[zhiyong-chen-studio.pages.dev](https://zhiyong-chen-studio.pages.dev/)。
+
 使用 Cloudflare Pages 的 Direct Upload 上传 `dist/` 构建产物，不连接 GitHub 或自动部署。
 
 先运行 `pnpm run build`，再上传生成的静态文件。发布与更新方式见 [`docs/deployment.md`](./docs/deployment.md)。

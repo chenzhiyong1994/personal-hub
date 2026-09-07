@@ -10,7 +10,9 @@
 4. 上传 `dist/` 文件夹，或将其内容压缩为 ZIP 后上传；ZIP 根目录应直接包含 `index.html`，不要额外包一层 `dist/`。
 5. 部署成功后记录控制台提供的实际 `pages.dev` 地址，并检查公开页面、语言切换、图片、移动菜单和邮件链接。
 
-当前状态：本地构建及资源检查已通过；云端上传尚待浏览器连接恢复。还没有验证成功的公开地址。
+公开主页：[zhiyong-chen-studio.pages.dev](https://zhiyong-chen-studio.pages.dev/)。Cloudflare Pages 项目名为 `zhiyong-chen-studio`，采用 Direct Upload。
+
+2026-09-07 已通过 Tabbit 浏览器上传 237 个静态文件并完成正式部署。公开地址返回 HTTP 200；脚本、样式、字体与代表图片和本地构建逐字节一致。已验证 1440 × 1000 桌面端、390 × 844 手机端、中英文切换、键盘标签页、移动菜单焦点、邮件链接及减少动效模式。
 
 ## 边界
 
