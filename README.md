@@ -46,7 +46,7 @@
 - **编辑工作室 × 数字控制室**：墨黑、暖纸色、信号蓝与酸性绿构成视觉系统；不对称编排、克制动效和项目舞台取代通用卡片仪表盘。
 - **移动端不是缩小版桌面**：在窄屏中重新安排标题、证据、项目索引和导航节奏，并持续检查横向溢出。
 - **可访问的交互**：包含章节定位、移动菜单焦点管理、方向键标签页、项目筛选、工作流展开、复制邮箱反馈，以及 `prefers-reduced-motion` 适配。
-- **纯前端、低依赖**：没有分析、追踪、表单、数据库或云服务；内容可以直接审查，构建结果也容易验证。
+- **纯前端**：使用 Cloudflare 托管静态构建产物；没有分析、追踪、表单或数据库，内容和部署配置都可以直接审查。
 
 ## 叙事结构
 
@@ -64,7 +64,7 @@
 
 ## 快速开始
 
-需要 Node.js 20.19+ 与 pnpm 10。
+需要 Node.js 22+ 与 pnpm 11；构建版本固定在 `.node-version` 和 `package.json` 中。
 
 ```bash
 git clone https://github.com/chenzhiyong1994/personal-hub.git
@@ -79,6 +79,12 @@ pnpm dev
 pnpm run typecheck
 pnpm run build
 ```
+
+## Cloudflare 托管
+
+部署使用 Workers Static Assets，`wrangler.jsonc` 指定发布 `dist/`。连接 Workers Builds 后，`main` 分支的推送会自动构建并更新正式站点。
+
+运行 `pnpm run deploy:check` 可在本地检查部署产物，`pnpm run preview:cloudflare` 可预览 Cloudflare 的资源路由。首次连接、日常更新及回滚见 [`docs/deployment.md`](./docs/deployment.md)。
 
 ## 项目结构
 

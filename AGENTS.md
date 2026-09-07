@@ -53,4 +53,6 @@ pnpm run build
 
 ## 部署
 
-当前里程碑仅限本地使用。除非用户后续明确要求，否则不要添加托管、分析、表单、追踪、数据库或云配置。
+- 用户已授权使用 Cloudflare 托管与维护主页；采用 Workers Static Assets，部署配置见 `wrangler.jsonc`，接入及更新方法见 `docs/deployment.md`。
+- 公开仓库推送前执行 `safe-open-source-release`；连接 Workers Builds 后，`main` 的推送会更新正式站点。
+- 不添加分析、表单、追踪、数据库或付费服务，除非用户另行明确要求。
