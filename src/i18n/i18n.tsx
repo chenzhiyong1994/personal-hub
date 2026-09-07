@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { generatedEnglish } from "./translations.generated";
+import { homeEnglish, homeUiEnglish } from "./homeEnglish";
 
 export type Language = "en" | "zh";
 
@@ -164,7 +165,7 @@ const uiEnglish: Record<string, string> = {
   "音乐创作": "Music Making",
 };
 
-const english = { ...generatedEnglish, ...curatedEnglish, ...uiEnglish } as Record<string, string>;
+const english = { ...generatedEnglish, ...curatedEnglish, ...uiEnglish, ...homeEnglish, ...homeUiEnglish } as Record<string, string>;
 
 function translateDeep<T>(value: T): T {
   if (typeof value === "string") return (english[value] ?? value) as T;
@@ -203,8 +204,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const isEnglish = language === "en";
     const description = isEnglish
-      ? "Zhiyong Chen · Digital Studio — Product manager focused on B2B SaaS, data products, and AI-assisted building."
-      : "Zhiyong Chen · Digital Studio — 高级产品经理，专注 B2B SaaS、数据产品与 AI 辅助构建。";
+      ? "Zhiyong Chen · Digital Studio — Senior product manager with 10 years in B2B SaaS, data products, and applied AI."
+      : "Zhiyong Chen · Digital Studio — 10 年产品经验，专注 B2B SaaS、数据产品与 AI 落地，也亲手构建工具与工作流。";
     const ogDescription = isEnglish
       ? "Turning complex business problems into products that can be tested."
       : "把复杂业务，做成可验证的产品。";

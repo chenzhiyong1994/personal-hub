@@ -1,5 +1,17 @@
-import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "motion/react";
-import { useEffect, useState, useTransition } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useMotionValueEvent,
+} from "motion/react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useTransition,
+  type KeyboardEvent,
+} from "react";
 import { useI18n } from "../i18n/i18n";
 
 const LINKS = [
@@ -13,49 +25,96 @@ const LINKS = [
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
+  const dialog = useRef<HTMLDialogElement>(null);
   const [isLanguagePending, startLanguageTransition] = useTransition();
   const { language, setLanguage, t } = useI18n();
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.4 });
-  const progress = reduce ? scrollYProgress : smoothProgress;
+  const { scrollY, scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 26,
+    mass: 0.4,
+  });
+  useMotionValueEvent(scrollY, "change", (value) => setScrolled(value > 24));
+
+  function containMenuFocus(event: KeyboardEvent<HTMLDialogElement>) {
+    if (event.key !== "Tab") return;
+    const controls =
+      event.currentTarget.querySelectorAll<HTMLElement>("button, a[href]");
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last?.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first?.focus();
+    }
+  }
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    setScrolled(window.scrollY > 24);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries)
+          if (entry.isIntersecting) setActive("#" + entry.target.id);
+      },
+      { rootMargin: "-15% 0px -70% 0px" },
+    );
+    [
+      "top",
+      "impact",
+      "works",
+      "systems",
+      "builder",
+      "creative",
+      "timeline",
+      "contact",
+    ].forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
+    if (!open) {
+      dialog.current?.close();
+      return;
+    }
+    dialog.current?.showModal();
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const desktop = window.matchMedia("(min-width: 861px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
     return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      desktop.removeEventListener("change", closeOnDesktop);
     };
   }, [open]);
 
-  const switchLanguage = () => {
-    startLanguageTransition(() => setLanguage(language === "en" ? "zh" : "en"));
-  };
-
   return (
     <>
-      <header className={`nav${scrolled ? " nav--scrolled" : ""}`}>
+      <header className={"nav" + (scrolled ? " nav--scrolled" : "")}>
         <div className="nav__bar">
           <a className="nav__logo" href="#top" aria-label={t("回到顶部")}>
             <span className="nav__logo-dot" aria-hidden="true" />
             {language === "en" ? "Zhiyong Chen" : "陈志勇"}
+            <span className="nav__studio">/ STUDIO</span>
           </a>
           <nav className="nav__links" aria-label={t("页面导航")}>
             {LINKS.map((link) => (
-              <a className="nav__link" href={link.href} key={link.href}>
+              <a
+                className="nav__link"
+                href={link.href}
+                key={link.href}
+                aria-current={active === link.href ? "location" : undefined}
+              >
                 <sup>{link.index}</sup>
                 {language === "en" ? link.en : link.label}
               </a>
@@ -66,65 +125,84 @@ export function Navigation() {
             type="button"
             aria-label={language === "en" ? "Switch to Chinese" : "切换到英文"}
             aria-busy={isLanguagePending}
-            onClick={switchLanguage}
+            onClick={() =>
+              startLanguageTransition(() =>
+                setLanguage(language === "en" ? "zh" : "en"),
+              )
+            }
           >
-            <span className={language === "en" ? "is-active" : undefined}>EN</span>
+            <span className={language === "en" ? "is-active" : undefined}>
+              EN
+            </span>
             <i aria-hidden="true">/</i>
-            <span className={language === "zh" ? "is-active" : undefined}>中</span>
+            <span className={language === "zh" ? "is-active" : undefined}>
+              中
+            </span>
           </button>
           <a className="nav__cta" href="mailto:chenzy94@sina.com">
-            {t("联系我")}
+            {t("联系我")} ↗
           </a>
           <button
             className="nav__burger"
+            type="button"
             aria-expanded={open}
-            aria-label={open ? t("关闭菜单") : t("打开菜单")}
-            onClick={() => setOpen((v) => !v)}
+            aria-controls="mobile-menu"
+            aria-label={t("打开菜单")}
+            onClick={() => setOpen(true)}
           >
             <span />
             <span />
           </button>
         </div>
-        <motion.div className="nav__progress" style={{ scaleX: progress }} aria-hidden="true" />
+        <motion.div
+          className="nav__progress"
+          style={{ scaleX: reduce ? scrollYProgress : smoothProgress }}
+          aria-hidden="true"
+        />
       </header>
-
-      <AnimatePresence>
-        {open && (
-          <motion.nav
-            className="nav__overlay"
-            aria-label={t("移动端导航")}
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={reduce ? undefined : { opacity: 0 }}
-            transition={{ duration: reduce ? 0 : 0.25 }}
+      <dialog
+        ref={dialog}
+        id="mobile-menu"
+        className="nav__dialog"
+        aria-label={t("移动端导航")}
+        onKeyDown={containMenuFocus}
+        onCancel={() => setOpen(false)}
+        onClose={() => setOpen(false)}
+      >
+        <div className="nav__dialog-head">
+          <span>DIGITAL STUDIO / INDEX</span>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label={t("关闭菜单")}
           >
-            {LINKS.map((link, i) => (
-              <motion.a
-                key={link.href}
-                className="nav__overlay-link"
-                href={link.href}
-                onClick={() => setOpen(false)}
-                initial={reduce ? false : { opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={reduce ? { duration: 0 } : { delay: 0.05 + i * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <small>{link.index}</small>
-                {language === "en" ? link.en : link.label}
-              </motion.a>
-            ))}
-            <motion.a
+            ×
+          </button>
+        </div>
+        <nav className="nav__dialog-links">
+          {LINKS.map((link) => (
+            <a
               className="nav__overlay-link"
-              href="mailto:chenzy94@sina.com"
-              initial={reduce ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={reduce ? { duration: 0 } : { delay: 0.32, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              href={link.href}
+              key={link.href}
+              aria-current={active === link.href ? "location" : undefined}
+              onClick={() => setOpen(false)}
             >
-              <small>Mail</small>
-              {t("联系我")}
-            </motion.a>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+              <small>{link.index}</small>
+              {language === "en" ? link.en : link.label}
+              <span aria-hidden="true">↗</span>
+            </a>
+          ))}
+          <a
+            className="nav__overlay-link"
+            href="mailto:chenzy94@sina.com"
+            onClick={() => setOpen(false)}
+          >
+            <small>Mail</small>
+            {t("联系我")}
+          </a>
+        </nav>
+      </dialog>
     </>
   );
 }

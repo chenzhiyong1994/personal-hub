@@ -1,52 +1,30 @@
-import { animate, useInView, useReducedMotion } from "motion/react";
-import { useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import { careerCases, impacts } from "../data/siteContent";
 import { useI18n, useLocalized } from "../i18n/i18n";
 import { Reveal } from "./Reveal";
 
-function CountUp({ value }: { value: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-  const reduce = useReducedMotion();
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !inView) return;
-    const match = value.match(/^([\d,.]+)(.*)$/);
-    if (!match) {
-      el.textContent = value;
-      return;
-    }
-    const target = parseFloat(match[1].replace(/,/g, ""));
-    const suffix = match[2];
-    const decimals = match[1].includes(".") ? 1 : 0;
-    const useComma = match[1].includes(",");
-    const format = (n: number) =>
-      (useComma
-        ? n.toLocaleString("en-US", { maximumFractionDigits: decimals, minimumFractionDigits: decimals })
-        : n.toFixed(decimals)) + suffix;
-
-    if (reduce) {
-      el.textContent = format(target);
-      return;
-    }
-    const controls = animate(0, target, {
-      duration: 1.6,
-      ease: [0.22, 1, 0.36, 1],
-      onUpdate: (v) => {
-        el.textContent = format(v);
-      },
-    });
-    return () => controls.stop();
-  }, [inView, value, reduce]);
-
-  return <span ref={ref}>{value}</span>;
-}
-
 export function Impact() {
   const { t } = useI18n();
   const localizedImpacts = useLocalized(impacts);
-  const localizedCases = useLocalized(careerCases);
+  const cases = useLocalized(careerCases);
+  const [selected, setSelected] = useState(0);
+  const refs = useRef<Array<HTMLButtonElement | null>>([]);
+  const reduce = useReducedMotion();
+  const active = cases[selected];
+  function handleKeys(event: KeyboardEvent) {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    const next =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? cases.length - 1
+          : (selected + (event.key === "ArrowRight" ? 1 : -1) + cases.length) %
+            cases.length;
+    setSelected(next);
+    refs.current[next]?.focus();
+  }
 
   return (
     <section className="section impact" id="impact">
@@ -55,23 +33,28 @@ export function Impact() {
           <header className="section-head">
             <span className="section-head__index">01</span>
             <h2 className="section-head__title">{t("职业基本盘")}</h2>
-            <span className="section-head__en">Track Record — B2B SaaS &amp; Data Products</span>
+            <span className="section-head__en">A DECADE OF PRODUCT WORK</span>
           </header>
         </Reveal>
-
         <Reveal>
-          <p className="impact__lead">
-            {t("这些数字都不是凭空长出来的。有的是接手一条问题不少的产品线，先把数据和节奏理顺；有的是从一张白纸开始，直到第一批客户愿意付费。挑四件我负责过的事，展开讲讲。")}
-          </p>
+          <div className="impact__intro">
+            <h3>
+              {t("做过的事，")}
+              <br />
+              <em>{t("留下的改变。")}</em>
+            </h3>
+            <p>
+              {t(
+                "从 B 端经营到 C 端体验，从数据分析到 AI 落地。我关心产品怎样进入真实业务，也对交付之后的结果负责。",
+              )}
+            </p>
+          </div>
         </Reveal>
-
         <Reveal>
           <div className="impact__grid">
-            {localizedImpacts.map((item, index) => (
-              <div className="impact__cell" key={impacts[index].label}>
-                <span className="impact__value">
-                  <CountUp value={item.value} />
-                </span>
+            {localizedImpacts.map((item) => (
+              <div className="impact__cell" key={item.label}>
+                <span className="impact__value">{item.value}</span>
                 <span className="impact__label">{item.label}</span>
                 <span className="impact__detail">{item.detail}</span>
                 <span className="impact__source">{item.source}</span>
@@ -79,35 +62,73 @@ export function Impact() {
             ))}
           </div>
         </Reveal>
-
         <Reveal>
-          <h3 className="cases__title">{t("代表案例 / Business Cases · 真实业务界面待补")}</h3>
+          <div
+            className="case-tabs"
+            role="tablist"
+            aria-label={t("职业案例")}
+            onKeyDown={handleKeys}
+          >
+            {cases.map((item, i) => (
+              <button
+                type="button"
+                role="tab"
+                id={"case-tab-" + item.id}
+                key={item.id}
+                ref={(el) => {
+                  refs.current[i] = el;
+                }}
+                aria-selected={i === selected}
+                aria-controls="career-panel"
+                tabIndex={i === selected ? 0 : -1}
+                onClick={() => setSelected(i)}
+              >
+                <small>{item.index}</small>
+                {item.name}
+              </button>
+            ))}
+          </div>
+          <div
+            className="business-case"
+            role="tabpanel"
+            id="career-panel"
+            aria-labelledby={"case-tab-" + active.id}
+            tabIndex={0}
+          >
+            <motion.div
+              className="business-case__story"
+              key={active.id}
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+            >
+              <span className="business-case__eyebrow">{active.category}</span>
+              <h3>{active.statement}</h3>
+              <p>{active.description}</p>
+              <strong>{active.proof}</strong>
+              <small>{active.note}</small>
+            </motion.div>
+            <div className="business-map">
+              <div className="business-map__head">
+                <span>{active.enName}</span>
+                <span>↗</span>
+              </div>
+              <div className="business-map__metric">
+                <strong>{active.metric}</strong>
+                <span>{active.metricLabel}</span>
+              </div>
+              <ol>
+                {active.flow.map((step, i) => (
+                  <li key={step}>
+                    <span>0{i + 1}</span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
+              <p>{t("业务路径 · 根据实际项目经历整理")}</p>
+            </div>
+          </div>
         </Reveal>
-        {localizedCases.map((c, i) => (
-          <Reveal key={c.id} delay={i * 0.04}>
-            <article className="career-case">
-              <div className="career-case__copy">
-                <span className="case__index">{c.index}</span>
-                <div>
-                  <div className="case__meta">{c.category} · {c.status}</div>
-                  <h4 className="case__name">{c.name}</h4>
-                  <p className="case__statement">{c.statement}</p>
-                  <p className="career-case__description">{c.description}</p>
-                  <p className="case__proof">{c.proof}</p>
-                  <div className="career-case__tags">
-                    {c.stack.map((item) => <span key={item}>{item}</span>)}
-                  </div>
-                </div>
-              </div>
-              <div className="career-case__visual" role="img" aria-label={c.imageAlt}>
-                <span>{c.visualLabel}</span>
-                <strong>IMAGE<br />PENDING</strong>
-                <p>{c.visualCaption}</p>
-                <i aria-hidden="true">{c.index}</i>
-              </div>
-            </article>
-          </Reveal>
-        ))}
       </div>
     </section>
   );

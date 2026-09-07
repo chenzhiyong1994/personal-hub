@@ -531,102 +531,161 @@ export const workSystems: WorkSystem[] = [
   },
 ];
 
-export const careerCases: Project[] = [
+export const profile = {
+  "name": "陈志勇",
+  "role": "高级产品经理 · B 端 / SaaS / AI / 数据",
+  "intro": "10 年产品经验，把复杂业务变成好用的产品。从 SaaS 商业化、数据体系，到业务中的 AI；也亲手构建桌面工具、小程序和 Agent 工作流。",
+  "location": "上海，中国",
+  "facts": [
+    {
+      "value": "10",
+      "label": "年产品经验"
+    },
+    {
+      "value": "17",
+      "label": "人团队管理"
+    },
+    {
+      "value": "B × C",
+      "label": "双端产品视角"
+    }
+  ],
+  "education": "安徽农业大学 · 计算机科学与技术 · 本科"
+};
+
+export const careerCases = [
   {
-    id: "trade-insight",
-    index: "01",
-    name: "商情洞察",
-    enName: "TRADE INSIGHT",
-    status: "1290W / 2024",
-    category: "B2B 商业数据产品",
-    statement: "把海关贸易数据，从“可以查询”推进到“可以驱动经营”。",
-    description:
-      "统筹产品线规划、复杂方案设计与约 14 人团队，围绕客户、竞企、市场、产品四类洞察持续迭代。接手后优先清理存量数据质量问题，再推进对话式 AI 场景封装与一线业务专项。",
-    proof: "续约率 44.3% · 超年度目标 6.65 个百分点 · 年度业绩 1,290W",
-    stack: ["产品线经营", "团队管理", "数据质量", "AI 场景改造"],
-    imageAlt: "商情洞察业务界面截图待补充",
-    visualLabel: "BUSINESS CASE / 01",
-    visualCaption: "待补：市场、客户、竞企、产品四维洞察界面",
-    tone: "blue",
+    "id": "youjia",
+    "index": "01",
+    "name": "优家 · 智能填报",
+    "enName": "AI IN THE REAL WORLD",
+    "category": "亿阁科技 · 2025.05—至今",
+    "statement": "把复杂的升学规则，变成可执行的决策。",
+    "description": "负责核心填报业务与优家 B 端产品，覆盖 SaaS、客户端、移动端、小程序。开创艺术类与征集志愿场景，上线 AI 志愿表分析、AI 专业组分析，并孵化 Agent + 智能硬件驱动的「优伴」。",
+    "proof": "日常 DAU 5 万+ · 高考季峰值 100 万+ · B 端高峰期从 6–7 月延长至 6–8 月",
+    "metric": "1,072",
+    "metricLabel": "B 端月活跃机构",
+    "flow": [
+      "获客转化",
+      "客单创建",
+      "智能推荐",
+      "志愿表生成",
+      "方案校验",
+      "报告交付"
+    ],
+    "note": "优伴处于业务孵化阶段；AI 分析已融入核心填报场景。"
   },
   {
-    id: "product-library",
-    index: "02",
-    name: "产品库",
-    enName: "PRODUCT INTELLIGENCE",
-    status: "0→1 / 3 MONTHS",
-    category: "AI × 贸易数据",
-    statement: "用 AI 转译传统数据，创造一个更接近真实业务的问题入口。",
-    description:
-      "从 0→1 定义产品路线，将非结构化海关记录转译为可分析的“产品名称”字段，形成新的数据维度；同时用对话式交互封装复杂查询，降低传统专业数据产品的使用门槛。",
-    proof: "上线 3 个月 · 付费用户周访 600+ · 付费用户周均留存率 51%",
-    stack: ["0→1", "AI 数据转译", "商业化", "用户留存"],
-    imageAlt: "产品库业务界面截图待补充",
-    visualLabel: "BUSINESS CASE / 02",
-    visualCaption: "待补：AI 产品转译、对话式检索与结果分析页",
-    tone: "red",
+    "id": "trade-insight",
+    "index": "02",
+    "name": "商情洞察",
+    "enName": "DATA TO BUSINESS",
+    "category": "腾道信息 · 2024.08—2025.03",
+    "statement": "让贸易数据，从可以查询走向支撑经营。",
+    "description": "统筹商情洞察与产品库两条产品线，管理 17 人团队，对营收负责。围绕趋势、竞对、画像、选品与报告迭代分析场景，以对话式 AI 降低操作门槛，并参与一线售前。",
+    "proof": "商情洞察年度业绩 1,290 万元 · 2 周解决积压半年的数据治理问题",
+    "metric": "1,290 万",
+    "metricLabel": "年度产品线业绩（元）",
+    "flow": [
+      "海关数据",
+      "质量治理",
+      "场景分析",
+      "对话式交互",
+      "行动建议",
+      "业务跟进"
+    ],
+    "note": "年度业绩为产品线结果，由团队共同交付。"
   },
   {
-    id: "qing-bi",
-    index: "03",
-    name: "轻析 / QingBI",
-    enName: "SELF-SERVICE BI",
-    status: "220W / FIRST YEAR",
-    category: "自研 BI 产品",
-    statement: "不只补齐数据分析能力，也为业务打开第二条增长曲线。",
-    description:
-      "主导产品从 0→1→商业化，设计并执行 MVP、内测、公测的递进式发布计划，完成约 30 家种子客户培养与公开发布；通过能力升级同步提升成交效率与整体客单价。",
-    proof: "首年独立业绩 220W · SMB 客单价 +75% · KA 客单价 +150%",
-    stack: ["产品路线", "BI", "种子用户", "商业化"],
-    imageAlt: "轻析 QingBI 业务界面截图待补充",
-    visualLabel: "BUSINESS CASE / 03",
-    visualCaption: "待补：自助分析、报表搭建与公开发布现场",
-    tone: "gold",
+    "id": "product-library",
+    "index": "03",
+    "name": "产品库",
+    "enName": "A NEW DATA DIMENSION",
+    "category": "腾道信息 · 2024.08—2025.03",
+    "statement": "用 AI 转译原始数据，打开新的分析维度。",
+    "description": "从 0 到 1 上线产品库，以大模型转译海关数据，新增「产品名称」字段。将复杂分析封装成对话式交互，让客户用业务语言完成检索、分析与操作。",
+    "proof": "上线 3 个月 · 付费用户 750+ · 周活跃率 80%（600+/750）",
+    "metric": "750+",
+    "metricLabel": "上线三个月付费用户",
+    "flow": [
+      "原始记录",
+      "AI 转译",
+      "产品名称",
+      "新分析维度",
+      "对话检索",
+      "分析与操作"
+    ],
+    "note": "周活跃率描述使用频率，不等同于留存率。"
   },
   {
-    id: "data-foundation",
-    index: "04",
-    name: "数据建设",
-    enName: "DATA FOUNDATION",
-    status: "1B+ / YEAR",
-    category: "内部数据产品",
-    statement: "先统一事实，再让数据真正进入产品运营与管理决策。",
-    description:
-      "从 0→1 建设覆盖 5 条产品线的数据体系，打通口径定义、数据采集、质量监控和应用运营链路，并用实时看板让关键经营信号被持续追踪。",
-    proof: "50+ 埋点事件 · 200+ 指标 · 年运行 10 亿+ 次 · 活跃看板 100+",
-    stack: ["指标体系", "数据治理", "Grafana", "神策"],
-    imageAlt: "数据建设业务看板截图待补充",
-    visualLabel: "BUSINESS CASE / 04",
-    visualCaption: "待补：指标地图、质量监控与实时经营看板",
-    tone: "amber",
+    "id": "qing-bi",
+    "index": "04",
+    "name": "轻析 / QingBI",
+    "enName": "ZERO TO COMMERCIAL",
+    "category": "易校科技 · 2020.10—2024.08",
+    "statement": "从第一批种子用户，走到独立商业化。",
+    "description": "负责报表引擎、门户引擎、数据建设三条产品线，管理 15 人团队。主导自研 BI 全生命周期，培养 30 家种子用户，推进内测、公测与商业化，并通过跨业务组合销售提升客单价。",
+    "proof": "2023 年独立业绩 220 万元 · SMB 客单价 +47% · KA 客单价 +150%",
+    "metric": "220 万",
+    "metricLabel": "2023 年独立业绩（元）",
+    "flow": [
+      "需求验证",
+      "30 家种子用户",
+      "产品内测",
+      "开放公测",
+      "商业化",
+      "组合销售"
+    ],
+    "note": "SMB 客单价 1.5 → 2.2 万元；KA 客单价 4 → 10 万元。"
   },
+  {
+    "id": "data-foundation",
+    "index": "05",
+    "name": "数据建设",
+    "enName": "A SHARED SOURCE OF TRUTH",
+    "category": "易校科技 · 2020.10—2024.08",
+    "statement": "先统一口径，再让数据进入日常决策。",
+    "description": "从 0 构建覆盖 5 条产品线的数据体系，串起埋点需求、口径定义、采集、审查与监控。沉淀 20+ 规范文档与 100+ 活跃看板，让多业务线拥有共同的经营语言。",
+    "proof": "5 条产品线 · 50+ 埋点事件 · 200+ 指标 · 埋点数据年上报 10 亿次",
+    "metric": "200+",
+    "metricLabel": "统一业务指标",
+    "flow": [
+      "埋点需求",
+      "口径定义",
+      "数据采集",
+      "数据审查",
+      "数据监控",
+      "经营决策"
+    ],
+    "note": "10 亿次为埋点数据年上报量。"
+  }
 ];
 
 export const impacts: Impact[] = [
   {
-    value: "1,290W",
-    label: "年度产品线业绩",
-    detail: "接手存量问题、建立业务专项并推进 AI 场景改造。",
-    source: "商情洞察 · 2024",
+    "value": "1,072",
+    "label": "B 端月活跃机构",
+    "detail": "核心填报业务，连接机构服务与考生决策。",
+    "source": "优家 · 智能填报"
   },
   {
-    value: "44.3%",
-    label: "续约率",
-    detail: "超年度目标 6.65 个百分点。",
-    source: "商情洞察 · 2024",
+    "value": "1,290 万",
+    "label": "年度产品线业绩（元）",
+    "detail": "产品线经营、数据治理与 AI 场景迭代。",
+    "source": "商情洞察"
   },
   {
-    value: "220W",
-    label: "首年独立业绩",
-    detail: "主导 QingBI 从 0→1→商业化，并完成公测发布。",
-    source: "轻析 / QingBI · 2023",
+    "value": "220 万",
+    "label": "2023 年独立业绩（元）",
+    "detail": "自研 BI 从 0 到 1，再到商业化。",
+    "source": "轻析 / QingBI"
   },
   {
-    value: "10亿+",
-    label: "指标年运行次数",
-    detail: "覆盖 5 条产品线、200+ 指标与 50+ 埋点事件。",
-    source: "数据建设 · 2021—2024",
-  },
+    "value": "200+",
+    "label": "统一业务指标",
+    "detail": "覆盖 5 条产品线的统一数据体系。",
+    "source": "数据建设"
+  }
 ];
 
 export const builderModes: BuilderMode[] = [
@@ -778,38 +837,33 @@ export const articles: Article[] = [
 
 export const timeline = [
   {
-    range: "2025—NOW",
-    company: "个人项目 / Personal Studio",
-    role: "AI 产品实践 / 跨媒介创作",
-    detail:
-      "持续构建 AI 原生小程序、小游戏、Agent 桌面工具与内容生产系统，并发布小说、音乐与深度文章。",
+    "range": "2025.05—NOW",
+    "company": "上海亿阁科技有限公司",
+    "role": "高级产品经理",
+    "detail": "负责核心填报与优家 B 端业务，推进四端协同、艺术类与征集志愿场景、AI 分析及优伴孵化。"
   },
   {
-    range: "2024—2025",
-    company: "上海腾道信息技术有限公司",
-    role: "高级产品经理 · 产品线主管",
-    detail:
-      "统筹商情洞察与产品库两条产品线，负责路线、团队、营收与续约；管理约 14 人团队。",
+    "range": "2024.08—2025.03",
+    "company": "上海腾道信息技术有限公司",
+    "role": "高级产品经理 · 产品线主管",
+    "detail": "统筹商情洞察与产品库两条产品线，管理 17 人团队，对产品规划、营收与商业结果负责。"
   },
   {
-    range: "2020—2024",
-    company: "上海易校信息科技有限公司",
-    role: "高级产品经理 · 产品线负责人",
-    detail:
-      "负责 BI、门户引擎与数据建设，推动 QingBI 从 0 到商业化，并建立 5 条产品线的数据体系。",
+    "range": "2020.10—2024.08",
+    "company": "上海易校信息科技有限公司",
+    "role": "高级产品经理 · 产品线负责人",
+    "detail": "负责报表引擎、门户引擎与数据建设，管理 15 人团队；推动 QingBI 商业化，建立跨产品线数据体系。"
   },
   {
-    range: "2016—2020",
-    company: "时代光华 / 点点客",
-    role: "产品经理 / 产品助理",
-    detail:
-      "从企业学习平台与 SaaS 业务起步，完成核心模块迭代、用户运营与商业目标协同。",
+    "range": "2018.04—2020.10",
+    "company": "上海时代光华教育发展有限公司",
+    "role": "产品经理",
+    "detail": "负责企业学习平台运营与激励体系。个人门户首月覆盖 700+ 企业客户，运营工具支持 5 分钟创建 H5 活动。"
   },
   {
-    range: "2012—2016",
-    company: "安徽农业大学",
-    role: "计算机科学与技术 · 本科",
-    detail:
-      "系统学习数据结构、软件工程与数据库原理，为产品与工程协作建立技术底座。",
-  },
-] as const;
+    "range": "2016.07—2018.04",
+    "company": "点点客",
+    "role": "产品助理",
+    "detail": "参与「到店」SaaS 产品 10+ 次迭代，负责用户调研、PRD 与上线跟进，优化预约和核销流程。"
+  }
+];
