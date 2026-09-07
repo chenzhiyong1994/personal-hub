@@ -34,8 +34,8 @@ export const homeEnglish: Record<string, string> = {
     "Make trade data useful for business decisions.",
   "统筹商情洞察与产品库两条产品线，管理 17 人团队，对营收负责。围绕趋势、竞对、画像、选品与报告迭代分析场景，以对话式 AI 降低操作门槛，并参与一线售前。":
     "Led Trade Insight and Product Intelligence with a 17-person team and revenue responsibility. Developed trend, competitor, customer, product-selection, and reporting scenarios, simplified analysis through conversational AI, and supported presales.",
-  "商情洞察年度业绩 1,290 万元 · 2 周解决积压半年的数据治理问题":
-    "RMB 12.9M annual Trade Insight revenue · Resolved a six-month data-governance backlog in two weeks",
+  "Q4 业绩环比增长 50%+（227 万+ → 340 万+）· 续约率 44.3% → 50.95%（+6.65 个百分点）":
+    "Q4 revenue grew 50%+ quarter over quarter (RMB 2.27M+ → 3.40M+) · Renewal rate: 44.3% → 50.95% (+6.65 percentage points)",
   "1,290 万": "12.9M",
   "年度产品线业绩（元）": "RMB annual product-line revenue",
   海关数据: "Customs data",
@@ -44,15 +44,15 @@ export const homeEnglish: Record<string, string> = {
   对话式交互: "Conversation",
   行动建议: "Recommendations",
   业务跟进: "Business follow-up",
-  "年度业绩为产品线结果，由团队共同交付。":
-    "Annual revenue is a product-line result delivered by the team.",
+  "2 周解决积压半年的数据治理问题。年度业绩为产品线结果，由团队共同交付。":
+    "Resolved a six-month data-governance backlog in two weeks. Annual revenue is a product-line result delivered by the team.",
   产品库: "Product Intelligence",
   "用 AI 转译原始数据，打开新的分析维度。":
     "Use AI to translate raw records into a new analytical dimension.",
   "从 0 到 1 上线产品库，以大模型转译海关数据，新增「产品名称」字段。将复杂分析封装成对话式交互，让客户用业务语言完成检索、分析与操作。":
     "Launched Product Intelligence from zero, using large language models to translate customs records and introduce a product-name field. Wrapped complex analysis in conversation so customers could search, analyze, and act in business language.",
-  "上线 3 个月 · 付费用户 750+ · 周活跃率 80%（600+/750）":
-    "Three months after launch · 750+ paying users · 80% weekly activity (600+/750)",
+  "上线 3 个月 · 付费用户 750+ · 周活跃率约 80% · 周留存率 51%":
+    "Three months after launch · 750+ paying users · About 80% weekly activity · 51% weekly retention",
   上线三个月付费用户: "paying users after three months",
   原始记录: "Raw records",
   "AI 转译": "AI translation",
@@ -97,8 +97,8 @@ export const homeEnglish: Record<string, string> = {
   "10 亿次为埋点数据年上报量。": "1B refers to annual event-report volume.",
   "核心填报业务，连接机构服务与考生决策。":
     "Core application planning for institutions and students.",
-  "产品线经营、数据治理与 AI 场景迭代。":
-    "Product-line operations, data quality, and AI scenarios.",
+  "Q4 业绩环比增长 50%+，续约率提升 6.65 个百分点。":
+    "Q4 revenue grew 50%+ quarter over quarter; renewal rate increased by 6.65 percentage points.",
   "自研 BI 从 0 到 1，再到商业化。":
     "An in-house BI product, from zero to commercial launch.",
   "覆盖 5 条产品线的统一数据体系。":
