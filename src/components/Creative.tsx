@@ -68,9 +68,9 @@ export function Creative() {
       <div className="wrap">
         <Reveal>
           <header className="section-head">
-            <span className="section-head__index">05</span>
-            <h2 className="section-head__title">{t("创作矩阵")}</h2>
-            <span className="section-head__en">Creative Output — Things I Keep Making</span>
+            <span className="section-head__index">04</span>
+            <h2 className="section-head__title">{t("工作之外")}</h2>
+            <span className="section-head__en">STORIES, MUSIC & SIDE NOTES</span>
           </header>
         </Reveal>
 

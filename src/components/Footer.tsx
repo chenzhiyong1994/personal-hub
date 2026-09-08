@@ -49,7 +49,7 @@ export function Footer() {
               <>
                 Let's make
                 <br />
-                <em>something meaningful.</em>
+                <em>something good.</em>
               </>
             ) : (
               <>
@@ -100,9 +100,7 @@ export function Footer() {
 
         <div className="footer__base">
           <span>© 2026 Zhiyong Chen · Digital Studio</span>
-          <span>
-            Product judgment by Zhiyong · Built with AI collaboration.
-          </span>
+          <span>Made with curiosity, care & AI collaboration.</span>
           <a className="footer__back" href="#top">
             {t("回到顶部")} ↑
           </a>

@@ -1,9 +1,7 @@
-import { Builder } from "./components/Builder";
 import { Creative } from "./components/Creative";
 import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
 import { Impact } from "./components/Impact";
-import { Marquee } from "./components/Marquee";
 import { Navigation } from "./components/Navigation";
 import { Timeline } from "./components/Timeline";
 import { WorkSystems } from "./components/WorkSystems";
@@ -21,16 +19,13 @@ function App() {
       <Navigation />
       <main id="main-content">
         <Hero />
-        <Marquee />
-        <Impact />
         <Works />
         <WorkSystems />
-        <Builder />
+        <Impact />
         <Creative />
         <Timeline />
       </main>
       <Footer />
-      <div className="noise" aria-hidden="true" />
     </>
   );
 }

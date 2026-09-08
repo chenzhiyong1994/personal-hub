@@ -31,8 +31,8 @@ export function Impact() {
       <div className="wrap">
         <Reveal>
           <header className="section-head">
-            <span className="section-head__index">01</span>
-            <h2 className="section-head__title">{t("职业基本盘")}</h2>
+            <span className="section-head__index">03</span>
+            <h2 className="section-head__title">{t("职业经历")}</h2>
             <span className="section-head__en">A DECADE OF PRODUCT WORK</span>
           </header>
         </Reveal>

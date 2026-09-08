@@ -15,12 +15,10 @@ import {
 import { useI18n } from "../i18n/i18n";
 
 const LINKS = [
-  { href: "#impact", index: "01", label: "履历", en: "Track Record" },
-  { href: "#works", index: "02", label: "产品", en: "Products" },
-  { href: "#systems", index: "03", label: "系统", en: "Systems" },
-  { href: "#builder", index: "04", label: "方法", en: "Method" },
-  { href: "#creative", index: "05", label: "创作", en: "Creative" },
-  { href: "#timeline", index: "06", label: "经历", en: "Path" },
+  { href: "#works", index: "01", label: "作品", en: "Work" },
+  { href: "#systems", index: "02", label: "工作方式", en: "Process" },
+  { href: "#impact", index: "03", label: "职业经历", en: "Background" },
+  { href: "#creative", index: "04", label: "创作", en: "Side notes" },
 ];
 
 export function Navigation() {
@@ -68,7 +66,6 @@ export function Navigation() {
       "impact",
       "works",
       "systems",
-      "builder",
       "creative",
       "timeline",
       "contact",

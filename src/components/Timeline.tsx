@@ -12,8 +12,8 @@ export function Timeline() {
       <div className="wrap">
         <Reveal>
           <header className="section-head">
-            <span className="section-head__index">06</span>
-            <h2 className="section-head__title">{t("路径")}</h2>
+            <span className="section-head__index">CV</span>
+            <h2 className="section-head__title">{t("走过的地方")}</h2>
             <span className="section-head__en">The Path — 2012 to Now</span>
           </header>
         </Reveal>

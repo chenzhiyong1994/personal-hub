@@ -12,7 +12,9 @@
 
 公开主页：[zhiyong-chen-studio.pages.dev](https://zhiyong-chen-studio.pages.dev/)。Cloudflare Pages 项目名为 `zhiyong-chen-studio`，采用 Direct Upload。
 
-2026-09-07 已通过 Tabbit 浏览器上传 237 个静态文件并完成正式部署。公开地址返回 HTTP 200；脚本、样式、字体与代表图片和本地构建逐字节一致。已验证 1440 × 1000 桌面端、390 × 844 手机端、中英文切换、键盘标签页、移动菜单焦点、邮件链接及减少动效模式。
+2026-09-08 已通过 Tabbit 浏览器上传 242 个静态文件并更新正式部署，包含全站浅色重设计、六个精选作品和三个工作流。公开地址返回 HTTP 200；HTML、脚本、样式、图标及五张新图片的 SHA-256 与本地构建一致。已验证 1440 × 1000 桌面端、390 × 844 手机端、双语项目详情、图片切换、作品筛选、工作流展开、职业标签页、菜单与弹层焦点、邮件链接及减少动效模式。
+
+本次部署快照：[c30acb98.zhiyong-chen-studio.pages.dev](https://c30acb98.zhiyong-chen-studio.pages.dev/)。
 
 ## 边界
 

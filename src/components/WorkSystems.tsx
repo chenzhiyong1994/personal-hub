@@ -1,131 +1,119 @@
-import { workSystems, type WorkSystem } from "../data/siteContent";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  FileText,
+  Film,
+  PenLine,
+  Plus,
+} from "lucide-react";
+import { workSystems } from "../data/siteContent";
 import { useI18n, useLocalized } from "../i18n/i18n";
 import { Reveal } from "./Reveal";
-import { useState } from "react";
 
-const ACCENTS: Record<WorkSystem["accent"], string> = {
-  blue: "var(--blue-soft)",
-  acid: "var(--acid)",
-  orange: "var(--orange)",
-  red: "var(--red)",
-  gold: "var(--gold)",
-};
-
+const icons = [PenLine, Film, FileText];
 export function WorkSystems() {
-  const { language, t } = useI18n();
+  const { language } = useI18n();
+  const zh = language === "zh";
   const systems = useLocalized(workSystems);
-  const [expanded, setExpanded] = useState<string | null>(workSystems[0].id);
-
   return (
     <section className="section systems" id="systems">
       <div className="wrap">
         <Reveal>
-          <header className="section-head">
-            <span className="section-head__index">03</span>
-            <h2 className="section-head__title">{t("工作系统")}</h2>
-            <span className="section-head__en">
-              My Daily Systems — Built on AI Agents
-            </span>
-          </header>
-        </Reveal>
-
-        <Reveal>
-          <div className="systems__intro">
-            <p>
-              {t(
-                "还有一些东西，没必要包装成 App。它们更像我每天使用的一套幕后班底：Agent 先查资料、整理草稿、盯住前后矛盾，我来决定写什么、信什么、最后交出什么。用久了，就慢慢长成了这五套工作流。",
+          <div className="section-kicker">
+            <span>02 / BEHIND THE WORK</span>
+            <span>{zh ? "我的工作方式" : "HOW I WORK"}</span>
+          </div>
+          <div className="section-intro">
+            <h2>
+              {zh ? (
+                <>
+                  好用的流程，
+                  <br />给<em>想法腾点地方。</em>
+                </>
+              ) : (
+                <>
+                  Less busywork.
+                  <br />
+                  <em>More room to think.</em>
+                </>
               )}
+            </h2>
+            <p>
+              {zh
+                ? "有些东西没有 App 图标，却会在做事时反复用到。我把写文章、做短剧、写需求里那些重复的步骤整理下来，让 AI 帮忙，也让自己少从头来过。"
+                : "Some of my most useful tools don’t have an app icon. These workflows gather the recurring steps in writing, short dramas, and product specs, with AI helping me start a little further along each time."}
             </p>
-            <span>5 AGENT WORKFLOWS / USED IN REAL WORK</span>
           </div>
         </Reveal>
-
         <div className="system-list">
-          {systems.map((system, systemIndex) => (
-            <Reveal key={system.id} delay={systemIndex * 0.04}>
-              <article
-                className="system-card"
-                style={{
-                  ["--system-accent" as string]: ACCENTS[system.accent],
-                }}
-              >
-                <header className="system-card__head">
-                  <span className="system-card__index">{system.index}</span>
-                  <div>
-                    <span className="system-card__role">{system.role}</span>
-                    <h3>
-                      {system.name}
-                      <small>{system.enName}</small>
-                    </h3>
+          {systems.map((system, i) => {
+            const Icon = icons[i];
+            return (
+              <Reveal key={system.id}>
+                <article className="system-row">
+                  <div className="system-row__identity">
+                    <span className={"system-icon system-icon--" + i}>
+                      <Icon size={26} strokeWidth={1.4} />
+                    </span>
+                    <span className="eyebrow">
+                      {system.index} / {system.name}
+                    </span>
                   </div>
-                  <p>{system.statement}</p>
-                </header>
-
-                <button
-                  className="system-card__toggle"
-                  type="button"
-                  aria-expanded={expanded === system.id}
-                  aria-controls={`system-details-${system.id}`}
-                  onClick={() =>
-                    setExpanded(expanded === system.id ? null : system.id)
-                  }
-                >
-                  <span>
-                    {t(expanded === system.id ? "收起工作流" : "展开工作流")}
-                  </span>
-                  <span aria-hidden="true">
-                    {expanded === system.id ? "−" : "+"}
-                  </span>
-                </button>
-                <div
-                  className="system-card__details"
-                  id={`system-details-${system.id}`}
-                  hidden={expanded !== system.id}
-                >
-                  <div
-                    className="system-flow"
-                    aria-label={
-                      language === "en"
-                        ? `${system.name} workflow`
-                        : `${system.name}流程`
-                    }
-                  >
-                    {system.flow.map((step, index) => (
-                      <div className="system-flow__step" key={step}>
-                        <span>{String(index + 1).padStart(2, "0")}</span>
-                        <b>{step}</b>
-                        {index < system.flow.length - 1 && (
-                          <i aria-hidden="true">→</i>
+                  <div className="system-row__story">
+                    <h3>{system.role}</h3>
+                    <p>{system.statement}</p>
+                    <div className="system-flow">
+                      {system.flow.map((step, index) => (
+                        <span key={step}>
+                          {step}
+                          {index < system.flow.length - 1 && (
+                            <ArrowRight size={13} />
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="system-delivery">
+                    <div>
+                      <span>{zh ? "从这里开始" : "START WITH"}</span>
+                      <p>{system.input}</p>
+                    </div>
+                    <div>
+                      <span>{zh ? "最后拿到" : "TAKE AWAY"}</span>
+                      <p>{system.output}</p>
+                    </div>
+                    <details>
+                      <summary>
+                        {zh ? "翻一页看看" : "Look inside"}
+                        <Plus size={17} />
+                      </summary>
+                      <div className="system-example">
+                        <span>{system.exampleLabel}</span>
+                        <h4>{system.exampleTitle}</h4>
+                        <ol>
+                          {system.example.map((line) => (
+                            <li key={line}>{line}</li>
+                          ))}
+                        </ol>
+                        <p>{system.note}</p>
+                        {system.link && (
+                          <a
+                            className="text-link"
+                            href={system.link}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {zh ? "查看相关项目" : "Explore the project"}
+                            <ArrowUpRight size={15} />
+                          </a>
                         )}
                       </div>
-                    ))}
+                    </details>
                   </div>
-
-                  <div className="system-card__handoff">
-                    <div>
-                      <span>{t("AGENT 先做")}</span>
-                      <p>{system.agentDoes}</p>
-                    </div>
-                    <div>
-                      <span>{t("我来把关")}</span>
-                      <p>{system.humanKeeps}</p>
-                    </div>
-                  </div>
-
-                  {system.lineage && (
-                    <footer className="system-card__lineage">
-                      <span>{t("从这些早期实验长出来")}</span>
-                      <div>
-                        {system.lineage.map((item) => (
-                          <b key={item}>{item}</b>
-                        ))}
-                      </div>
-                    </footer>
-                  )}
-                </div>
-              </article>
-            </Reveal>
-          ))}
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

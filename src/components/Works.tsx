@@ -1,436 +1,340 @@
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useRef, useState, type KeyboardEvent } from "react";
-import { projects, type Project } from "../data/siteContent";
+import { ArrowUpRight, ChevronLeft, ChevronRight, Plus, X } from "lucide-react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { archivedProjects, projects, type Project } from "../data/siteContent";
 import { useI18n, useLocalized } from "../i18n/i18n";
 import { Reveal } from "./Reveal";
 
-const TONE_VAR: Record<Project["tone"], string> = {
-  gold: "var(--gold)",
-  red: "var(--red)",
-  blue: "var(--blue-soft)",
-  amber: "var(--orange)",
-};
-
-const SOURCE_LABEL = {
-  runtime: "LIVE RUNTIME",
-  source: "SOURCE-FAITHFUL UI",
-  archive: "ARCHIVE ITERATION",
-} as const;
-
-const COLLECTIONS = [
-  {
-    id: "all",
-    label: "全部作品",
-    projects: projects.map((project) => project.id),
-  },
-  {
-    id: "desktop",
-    label: "桌面与工具",
-    projects: ["beiyemd", "capsule-office", "hush-wake"],
-  },
-  {
-    id: "ai",
-    label: "AI 与工作流",
-    projects: ["ai-business-twin", "stack-trail", "bie-ma-le"],
-  },
-  {
-    id: "play",
-    label: "互动实验",
-    projects: ["arcana-mirror", "unverified-survivors"],
-  },
-];
-
-function ProjectDossier({ project }: { project: Project }) {
-  const { t } = useI18n();
-
+function ClockCover() {
   return (
-    <article
-      className="dossier"
-      id={`dossier-${project.id}`}
-      aria-labelledby={`project-tab-${project.id}`}
-      style={{ ["--project-accent" as string]: TONE_VAR[project.tone] }}
-    >
-      <header className="dossier__head">
-        <div>
-          <span className="dossier__eyebrow">
-            PROJECT DOSSIER / {project.index}
-          </span>
-          <h3>{project.name}</h3>
-        </div>
-        <p>{project.description}</p>
-      </header>
-
-      <div className="dossier__grid">
-        <section className="dossier__challenge">
-          <span>{t("最初想解决什么")}</span>
-          <h4>{project.challenge}</h4>
-        </section>
-
-        <section>
-          <span>{t("做过的关键选择")}</span>
-          <ol className="dossier__decisions">
-            {project.decisions?.map((decision) => (
-              <li key={decision}>{decision}</li>
-            ))}
-          </ol>
-        </section>
-
-        <section>
-          <span>{t("我和 AI 怎么分工")}</span>
-          <div className="ownership">
-            <div>
-              <b>{t("我负责")}</b>
-              <p>{project.ownership?.human}</p>
-            </div>
-            <div>
-              <b>{t("AI 参与")}</b>
-              <p>{project.ownership?.ai}</p>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <span>{t("我怎么确认它真的能用")}</span>
-          <ul className="dossier__checks">
-            {project.verification?.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
+    <div className="clock-art" aria-hidden="true">
+      <span className="clock-art__brand">HUSHWAKE</span>
+      <div className="clock-face">
+        <span className="clock-face__top">12</span>
+        <span className="clock-face__right">3</span>
+        <span className="clock-face__bottom">6</span>
+        <span className="clock-face__left">9</span>
+        <i />
+        <b />
+        <span className="clock-face__pin" />
       </div>
+      <span className="clock-art__time">a softer morning.</span>
+    </div>
+  );
+}
 
-      <footer className="dossier__foot">
-        <div>
-          <span>{t("现在做到哪里")}</span>
-          <p>{project.boundary}</p>
-          {project.note && <p className="dossier__note">P.S. {project.note}</p>}
-        </div>
-        {project.links && (
-          <div className="dossier__links">
-            {project.links.map((link) => (
-              <a
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
-                key={link.href}
-              >
-                {link.label}
-                <span aria-hidden="true">↗</span>
-              </a>
-            ))}
+function ProjectDialog({
+  project,
+  onClose,
+}: {
+  project: Project;
+  onClose: () => void;
+}) {
+  const { language } = useI18n();
+  const zh = language === "zh";
+  const dialog = useRef<HTMLDialogElement>(null);
+  const [slide, setSlide] = useState(0);
+  const images = project.gallery ?? [];
+  useEffect(() => {
+    const element = dialog.current;
+    element?.showModal();
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      element?.close();
+      document.body.style.overflow = overflow;
+    };
+  }, []);
+  function handleKey(event: KeyboardEvent<HTMLDialogElement>) {
+    if (event.key !== "Tab") return;
+    const controls = Array.from(
+      event.currentTarget.querySelectorAll<HTMLElement>("button, a[href]"),
+    );
+    const first = controls[0],
+      last = controls[controls.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last?.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first?.focus();
+    }
+  }
+  return (
+    <dialog
+      ref={dialog}
+      className="project-dialog"
+      aria-labelledby="project-dialog-title"
+      onCancel={onClose}
+      onKeyDown={handleKey}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <div className="project-dialog__inner">
+        <header className="project-dialog__head">
+          <span>
+            {project.category} / {project.status}
+          </span>
+          <button
+            className="icon-button"
+            onClick={onClose}
+            aria-label={zh ? "关闭项目" : "Close project"}
+            autoFocus
+          >
+            <X size={22} />
+          </button>
+        </header>
+        <div className="project-dialog__layout">
+          <div className={"project-dialog__visual tone-" + project.tone}>
+            {images.length > 0 ? (
+              <img src={images[slide].src} alt={images[slide].alt} />
+            ) : (
+              <ClockCover />
+            )}
+            <div className="gallery-caption">
+              <p>
+                {images[slide]?.caption ??
+                  (zh
+                    ? "闹钟概念插画，非应用截图"
+                    : "Alarm illustration, not an app screenshot")}
+              </p>
+              {images.length > 1 && (
+                <div className="gallery-controls">
+                  <button
+                    className="icon-button"
+                    aria-label={zh ? "上一张图片" : "Previous image"}
+                    onClick={() =>
+                      setSlide((slide - 1 + images.length) % images.length)
+                    }
+                  >
+                    <ChevronLeft size={19} />
+                  </button>
+                  <span aria-live="polite">
+                    {slide + 1} / {images.length}
+                  </span>
+                  <button
+                    className="icon-button"
+                    aria-label={zh ? "下一张图片" : "Next image"}
+                    onClick={() => setSlide((slide + 1) % images.length)}
+                  >
+                    <ChevronRight size={19} />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        )}
-      </footer>
-    </article>
+          <div className="project-dialog__story">
+            <span className="eyebrow">{project.enName}</span>
+            <h2 id="project-dialog-title">{project.name}</h2>
+            <h3>{project.statement}</h3>
+            <p>{project.description}</p>
+            <ul>
+              {project.features.map((feature) => (
+                <li key={feature}>{feature}</li>
+              ))}
+            </ul>
+            <div className="project-boundary">
+              <span>{zh ? "现在做到这里" : "Where it is today"}</span>
+              <p>{project.boundary}</p>
+            </div>
+            <div className="project-links">
+              {project.links.map((link) => (
+                <a
+                  className="text-link"
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {link.label}
+                  <ArrowUpRight size={16} />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
   );
 }
 
 export function Works() {
-  const [collection, setCollection] = useState(COLLECTIONS[0]);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [slideIndex, setSlideIndex] = useState(0);
-  const [expanded, setExpanded] = useState(false);
-  const reduce = useReducedMotion();
-  const { language, t } = useI18n();
-  const localizedProjects = useLocalized(projects);
-  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const visibleProjects = localizedProjects.filter((project) =>
-    collection.projects.includes(project.id),
-  );
-  const active = visibleProjects[activeIndex];
-  const gallery = active.gallery ?? [];
-  const resolvedSlideIndex = Math.min(
-    slideIndex,
-    Math.max(gallery.length - 1, 0),
-  );
-  const slide = gallery[resolvedSlideIndex];
-
-  const showSlide = (index: number) => {
-    if (gallery.length === 0) return;
-    setSlideIndex((index + gallery.length) % gallery.length);
-  };
-
-  const selectProject = (index: number) => {
-    if (index === activeIndex) return;
-    setSlideIndex(0);
-    setExpanded(false);
-    setActiveIndex(index);
-  };
-
-  const handleTabsKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
-    event.preventDefault();
-    let next = activeIndex;
-    if (event.key === "ArrowDown")
-      next = (activeIndex + 1) % visibleProjects.length;
-    if (event.key === "ArrowUp")
-      next =
-        (activeIndex - 1 + visibleProjects.length) % visibleProjects.length;
-    if (event.key === "Home") next = 0;
-    if (event.key === "End") next = visibleProjects.length - 1;
-    selectProject(next);
-    tabRefs.current[next]?.focus();
-  };
-
-  const handleGalleryKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-    if (
-      gallery.length < 2 ||
-      !["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)
-    )
-      return;
-    event.preventDefault();
-    if (event.key === "ArrowLeft") showSlide(resolvedSlideIndex - 1);
-    if (event.key === "ArrowRight") showSlide(resolvedSlideIndex + 1);
-    if (event.key === "Home") showSlide(0);
-    if (event.key === "End") showSlide(gallery.length - 1);
-  };
-
+  const { language } = useI18n();
+  const zh = language === "zh";
+  const items = useLocalized(projects),
+    archive = useLocalized(archivedProjects);
+  const [filter, setFilter] = useState<"all" | "tools" | "play">("all");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  useEffect(() => {
+    function revealLinkedProject() {
+      const id = window.location.hash.slice(1);
+      if (!projects.some((project) => id === `project-${project.id}`)) return;
+      setFilter("all");
+      requestAnimationFrame(() =>
+        document.getElementById(id)?.scrollIntoView(),
+      );
+    }
+    window.addEventListener("hashchange", revealLinkedProject);
+    return () => window.removeEventListener("hashchange", revealLinkedProject);
+  }, []);
+  const opener = useRef<HTMLButtonElement | null>(null);
+  function openProject(id: string, button: HTMLButtonElement) {
+    opener.current = button;
+    setSelectedId(id);
+  }
+  function closeProject() {
+    setSelectedId(null);
+    requestAnimationFrame(() => opener.current?.focus({ preventScroll: true }));
+  }
+  const selected = items.find((p) => p.id === selectedId);
+  const visible = items.filter((p) => filter === "all" || p.group === filter);
   return (
-    <section className="section project-lab" id="works">
+    <section className="section works" id="works">
       <div className="wrap">
         <Reveal>
-          <header className="section-head">
-            <span className="section-head__index">02</span>
-            <h2 className="section-head__title">{t("产品实践")}</h2>
-            <span className="section-head__en">
-              Selected Work — Ideas Taken Far Enough to Test
-            </span>
-          </header>
-        </Reveal>
-
-        <Reveal>
-          <div className="project-lab__intro">
-            <p>
-              {t(
-                "工作项目有人定目标、有人排期。这里的八个项目，大多只是我某天冒出的一个念头：要不做个东西试试？没人催，我就自己把界面、代码和那些意外报错一点点补齐。做成什么样、为什么停在这里，也都如实放着。",
+          <div className="section-kicker">
+            <span>01 / SELECTED WORK</span>
+            <span>2026</span>
+          </div>
+          <div className="section-intro">
+            <h2>
+              {zh ? (
+                <>
+                  从“要不试试”，
+                  <br />到<em>真的能用。</em>
+                </>
+              ) : (
+                <>
+                  From “what if”
+                  <br />
+                  to <em>here it is.</em>
+                </>
               )}
+            </h2>
+            <p>
+              {zh
+                ? "一个写东西的地方，一个记训练的小工具，也有纯粹想试着做的游戏。大多从一个很小的念头开始，边用边改，慢慢长成现在的样子。"
+                : "A place to write, a little training log, a game I simply wanted to make. Most began with a small thought, then grew through using them and making them better."}
             </p>
-            <span>8 PROJECTS / REAL SCREENS INSIDE</span>
           </div>
         </Reveal>
-
         <div
-          className="project-filters"
+          className="work-filters"
           role="group"
-          aria-label={t("筛选作品")}
+          aria-label={zh ? "筛选作品" : "Filter projects"}
         >
-          {COLLECTIONS.map((item) => (
+          {(
+            [
+              { id: "all", zh: "全部作品", en: "All work" },
+              { id: "tools", zh: "日常工具", en: "Everyday tools" },
+              { id: "play", zh: "好玩的实验", en: "Playful experiments" },
+            ] as const
+          ).map((item) => (
             <button
               type="button"
               key={item.id}
-              aria-pressed={collection.id === item.id}
-              onClick={() => {
-                setCollection(item);
-                setActiveIndex(0);
-                setSlideIndex(0);
-                setExpanded(false);
-              }}
+              aria-pressed={filter === item.id}
+              onClick={() => setFilter(item.id)}
             >
-              {t(item.label)}
+              {zh ? item.zh : item.en}
+              <sup>
+                {item.id === "all"
+                  ? items.length
+                  : items.filter((p) => p.group === item.id).length}
+              </sup>
             </button>
           ))}
-          <span aria-live="polite">
-            {visibleProjects.length} / {projects.length} {t("件作品")}
+          <span className="work-count" role="status">
+            {String(visible.length).padStart(2, "0")}{" "}
+            {zh ? "件作品" : "PROJECTS"}
           </span>
         </div>
-        <div className="project-browser">
-          <Reveal>
-            <div
-              className="project-index"
-              role="tablist"
-              aria-label={t("项目列表")}
-              aria-orientation="vertical"
-              onKeyDown={handleTabsKeyDown}
+        <div
+          className={
+            "project-grid" + (filter !== "all" ? " project-grid--filtered" : "")
+          }
+        >
+          {visible.map((project) => (
+            <article
+              className={"project-card project-card--" + project.cover}
+              id={"project-" + project.id}
+              key={project.id}
             >
-              {visibleProjects.map((project, index) => (
-                <button
-                  className="project-index__item"
-                  id={`project-tab-${project.id}`}
-                  role="tab"
-                  aria-selected={index === activeIndex}
-                  aria-controls="project-stage"
-                  tabIndex={index === activeIndex ? 0 : -1}
-                  key={project.id}
-                  ref={(node) => {
-                    tabRefs.current[index] = node;
-                  }}
-                  onClick={() => selectProject(index)}
-                  onFocus={() => selectProject(index)}
-                >
-                  <span className="project-index__number">{project.index}</span>
-                  <span className="project-index__name">
-                    {project.name}
-                    <small>{project.enName}</small>
-                  </span>
-                  <span className="project-index__type">
-                    {project.category}
-                  </span>
-                  <span className="project-index__arrow" aria-hidden="true">
-                    ↗
-                  </span>
-                </button>
-              ))}
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.08}>
-            <div
-              className="project-stage"
-              id="project-stage"
-              role="tabpanel"
-              aria-labelledby={`project-tab-${active.id}`}
-              style={{ ["--project-accent" as string]: TONE_VAR[active.tone] }}
-            >
-              <motion.div
-                className="project-stage__scene"
-                key={active.id}
-                initial={reduce ? false : { opacity: 0, scale: 0.985, x: 18 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={reduce ? undefined : { opacity: 0, scale: 1.01, x: -14 }}
-                transition={{
-                  duration: reduce ? 0 : 0.48,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
+              <button
+                type="button"
+                className={"project-cover tone-" + project.tone}
+                onClick={(event) =>
+                  openProject(project.id, event.currentTarget)
+                }
+                aria-label={
+                  (zh ? "打开项目：" : "Open project: ") + project.name
+                }
               >
-                {slide && (
-                  <figure
-                    className="project-gallery"
-                    tabIndex={0}
-                    onKeyDown={handleGalleryKeyDown}
-                    aria-label={
-                      language === "en"
-                        ? `${active.name} interface gallery, image ${resolvedSlideIndex + 1} of ${gallery.length}`
-                        : `${active.name}界面图集，第 ${resolvedSlideIndex + 1} 张，共 ${gallery.length} 张`
+                <span className="project-cover__top">
+                  <span>{project.enName}</span>
+                  <span>{project.status}</span>
+                </span>
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.imageAlt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <ClockCover />
+                )}
+                <span className="project-cover__open">
+                  <Plus size={19} />
+                  <span>{zh ? "看看里面" : "Take a closer look"}</span>
+                </span>
+              </button>
+              <div className="project-card__title">
+                <h3>
+                  <button
+                    onClick={(event) =>
+                      openProject(project.id, event.currentTarget)
                     }
                   >
-                    <div className="project-gallery__viewport">
-                      <motion.img
-                        key={slide.src}
-                        src={slide.src}
-                        alt={slide.alt}
-                        initial={
-                          reduce ? false : { opacity: 0, x: 22, scale: 0.985 }
-                        }
-                        animate={{ opacity: 1, x: 0, scale: 1 }}
-                        exit={
-                          reduce
-                            ? undefined
-                            : { opacity: 0, x: -18, scale: 1.01 }
-                        }
-                        transition={{
-                          duration: reduce ? 0 : 0.38,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                      />
-                      <div
-                        className="project-gallery__stamp"
-                        aria-hidden="true"
-                      >
-                        <span>{SOURCE_LABEL[slide.source]}</span>
-                        <b>{String(resolvedSlideIndex + 1).padStart(2, "0")}</b>
-                      </div>
-                      {gallery.length > 1 && (
-                        <div className="project-gallery__arrows">
-                          <button
-                            type="button"
-                            onClick={() => showSlide(resolvedSlideIndex - 1)}
-                            aria-label={t("上一张界面截图")}
-                          >
-                            ←
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => showSlide(resolvedSlideIndex + 1)}
-                            aria-label={t("下一张界面截图")}
-                          >
-                            →
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                    <figcaption>
-                      <span>{slide.caption}</span>
-                      <span>
-                        {String(resolvedSlideIndex + 1).padStart(2, "0")} /{" "}
-                        {String(gallery.length).padStart(2, "0")}
-                      </span>
-                    </figcaption>
-                    {gallery.length > 1 && (
-                      <div
-                        className="project-gallery__rail"
-                        aria-label={t("选择界面截图")}
-                      >
-                        {gallery.map((image, index) => (
-                          <button
-                            type="button"
-                            key={image.src}
-                            aria-label={
-                              language === "en"
-                                ? `View image ${index + 1}: ${image.caption}`
-                                : `查看第 ${index + 1} 张：${image.caption}`
-                            }
-                            aria-current={
-                              index === resolvedSlideIndex ? "true" : undefined
-                            }
-                            onClick={() => showSlide(index)}
-                          >
-                            <i />
-                            <span>{String(index + 1).padStart(2, "0")}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </figure>
-                )}
-
-                <div className="project-stage__copy">
-                  <div className="project-stage__meta">
-                    <span>{active.status}</span>
-                    <span>{active.category}</span>
-                  </div>
-                  <h3>{active.statement}</h3>
-                  <p>{active.description}</p>
-                  <div className="project-stage__proof">{active.proof}</div>
-                  <div className="project-stage__stack">
-                    {active.stack.map((item) => (
-                      <span key={item}>{item}</span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-
-              <button
-                className="project-stage__open"
-                aria-expanded={expanded}
-                aria-controls={`dossier-${active.id}`}
-                onClick={() => setExpanded((value) => !value)}
-              >
-                <span>
-                  {expanded ? t("收起项目细节") : t("继续看我怎么做的")}
-                </span>
-                <i aria-hidden="true">{expanded ? "−" : "+"}</i>
-              </button>
-            </div>
-          </Reveal>
+                    {project.name}
+                    <ArrowUpRight size={21} />
+                  </button>
+                </h3>
+                <span>{project.category}</span>
+              </div>
+              <p>{project.statement}</p>
+            </article>
+          ))}
         </div>
-
-        <AnimatePresence mode="wait">
-          {expanded && (
-            <motion.div
-              key={active.id}
-              initial={reduce ? false : { opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduce ? undefined : { opacity: 0, y: -18 }}
-              transition={{
-                duration: reduce ? 0 : 0.5,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              <ProjectDossier project={active} />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <details className="archive">
+          <summary>
+            <span>
+              {zh ? "早一些的小实验" : "Earlier experiments"}
+              <small>
+                {zh
+                  ? "还有四个念头，留下了一些东西。"
+                  : "Four more ideas that left something behind."}
+              </small>
+            </span>
+            <Plus size={20} />
+          </summary>
+          <div className="archive__list">
+            {archive.map((project) => (
+              <div key={project.name}>
+                <h3>{project.name}</h3>
+                <p>{project.description}</p>
+              </div>
+            ))}
+          </div>
+        </details>
       </div>
+      {selected && (
+        <ProjectDialog
+          key={selected.id}
+          project={selected}
+          onClose={closeProject}
+        />
+      )}
     </section>
   );
 }

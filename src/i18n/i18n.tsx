@@ -9,6 +9,7 @@ import {
 } from "react";
 import { generatedEnglish } from "./translations.generated";
 import { homeEnglish, homeUiEnglish } from "./homeEnglish";
+import { studioEnglish } from "./studioEnglish";
 
 export type Language = "en" | "zh";
 
@@ -165,7 +166,7 @@ const uiEnglish: Record<string, string> = {
   "音乐创作": "Music Making",
 };
 
-const english = { ...generatedEnglish, ...curatedEnglish, ...uiEnglish, ...homeEnglish, ...homeUiEnglish } as Record<string, string>;
+const english = { ...generatedEnglish, ...curatedEnglish, ...uiEnglish, ...homeEnglish, ...homeUiEnglish, ...studioEnglish } as Record<string, string>;
 
 function translateDeep<T>(value: T): T {
   if (typeof value === "string") return (english[value] ?? value) as T;
