@@ -1,6 +1,6 @@
-# Cloudflare Pages 静态发布
+# 个人主页与项目介绍页发布
 
-本项目仅使用 Cloudflare Pages 免费托管构建后的静态文件。不要连接 GitHub、申请仓库访问权限、配置自动构建或添加云端代码维护。
+个人主页使用 Cloudflare Pages 免费托管构建后的静态文件。Cloudflare 不连接 GitHub，不申请仓库访问权限或配置自动构建。独立的项目介绍页使用 GitHub Pages，见下方配置。
 
 ## 发布与更新
 
@@ -24,3 +24,17 @@
 - 遇到线上问题，在 Pages 的部署记录中回滚到已验证版本。
 
 官方说明：[Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/)。
+
+## GitHub Pages 项目介绍页
+
+- 地址：[chenzhiyong1994.github.io/personal-hub](https://chenzhiyong1994.github.io/personal-hub/)。
+- 源文件：`site/index.html`、`site/styles.css`、`site/main.js`、`site/favicon.svg`。
+- 构建：`pnpm run build:project`；产物位于 ignored 的 `.project-site/`，只包含介绍页与 `docs/assets/` 中指定的两张预览图。
+- 预览：`pnpm run preview:project`，打开 `http://localhost:4180/personal-hub/`；所有站内素材使用相对路径，兼容仓库子路径。
+- 发布：仓库 Settings → Pages 使用 **GitHub Actions**；`.github/workflows/project-pages.yml` 在 `main` 的相关文件更新或手动触发时构建、上传并部署。
+- 权限：构建只读仓库与 Pages 配置，部署获得 Pages 与 OIDC 身份的写入权限（`pages`、`id-token`）。不需要个人访问令牌、云端数据库或第三方 GitHub App。
+- 检查：1440 × 1000 与 390 × 844、中英切换、预览标签的方向键切换、复制命令、外部入口、减少动效及无横向溢出。
+
+个人主页发布与介绍页发布有各自的构建入口；本流程不将 `dist/` 上传到 GitHub Pages，不改变 Cloudflare 发布配置。
+
+官方说明：[GitHub Pages 自定义工作流](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)。

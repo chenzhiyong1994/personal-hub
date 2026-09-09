@@ -6,7 +6,9 @@
 </p>
 
 <p align="center">
-  <a href="./LICENSE">MIT Code License</a>
+  <a href="https://chenzhiyong1994.github.io/personal-hub/">项目主页 / Project website</a>
+  · <a href="https://zhiyong-chen-studio.pages.dev/">个人主页 / Live portfolio</a>
+  · <a href="./LICENSE">MIT Code License</a>
   · <a href="./CONTENT-NOTICE.md">Content Notice</a>
   · <a href="./CONTRIBUTING.md">Contributing</a>
 </p>
@@ -16,6 +18,8 @@
 项目将 B2B SaaS / 数据产品经历、个人产品实验、Agent 工作流和长期创作放进同一条叙事路径。页面保留了作者的真实内容，因此它不是开箱即用的匿名模板；但它的内容模型、响应式策略和证据组织方式，可以作为个人主页或作品集的一个扎实起点。
 
 站点支持 English / 中文完整切换：首次访问默认英文，选择中文后仅在浏览器本地保存偏好；页面标题、描述、可见文案、图片替代文本和无障碍标签会同步切换。
+
+**[项目主页](https://chenzhiyong1994.github.io/personal-hub/)** 提供设计介绍、桌面与移动端预览、功能说明和开始使用入口，由 GitHub Pages 托管。**[个人主页](https://zhiyong-chen-studio.pages.dev/)** 展示实际的作品、工作方式与职业经历，由 Cloudflare Pages 托管。
 
 ## 页面预览
 
@@ -86,6 +90,8 @@ pnpm run build
 
 ```text
 personal-hub/
+├─ site/                      # GitHub Pages 项目介绍页（中英双语）
+├─ scripts/build-project-site.mjs # 仅打包介绍页及指定预览素材
 ├─ public/                    # 头像与项目证据图片
 ├─ src/
 │  ├─ components/            # 叙事章节与交互组件
@@ -96,8 +102,19 @@ personal-hub/
 ├─ docs/
 │  ├─ assets/                 # GitHub 介绍图
 │  └─ content-sources.md      # 公开事实来源与内容边界
-└─ .github/                   # CI 与协作模板
+└─ .github/                   # 项目介绍页发布工作流与协作模板
 ```
+
+## 项目介绍页维护
+
+修改 `site/` 后运行：
+
+```bash
+pnpm run build:project
+pnpm run preview:project
+```
+
+在 `http://localhost:4180/personal-hub/` 检查页面。`main` 分支中的介绍页、指定预览图片或发布工作流更新时，GitHub Actions 会将 `.project-site/` 发布到 GitHub Pages；也可手动运行 **Deploy project homepage**。该流程只发布项目介绍页，个人主页继续按原有 Cloudflare 静态上传方式更新。配置见 [`docs/deployment.md`](./docs/deployment.md)。
 
 ## 改造成你自己的 Personal Hub
 

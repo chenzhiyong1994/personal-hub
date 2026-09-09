@@ -55,4 +55,5 @@ pnpm run build
 
 - 用户已授权使用 Cloudflare Pages 免费托管主页；只上传构建后的静态文件，不连接 GitHub、不申请仓库权限、不配置自动部署。更新方法见 `docs/deployment.md`。
 - 发布网站与维护 Git 仓库分别处理；用户请求静态发布不意味着授权额外的仓库推送或云端代码维护。
+- `site/` 为独立的 GitHub Pages 项目介绍页；用户已授权配置其发布工作流。使用 `pnpm run build:project` 构建、`pnpm run preview:project` 预览，不能将个人主页 `dist/` 混入该发布产物。
 - 不添加分析、表单、追踪、数据库或付费服务，除非用户另行明确要求。

@@ -27,6 +27,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:project": "node scripts/build-project-site.mjs",
+    "preview:project": "vite preview --outDir .project-site --port 4180 --base /personal-hub/",
     "typecheck": "tsc -b",
     "preview": "vite preview"
   },
