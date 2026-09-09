@@ -1,4 +1,67 @@
 export const studioEnglish: Record<string, string> = {
+  "悄醒闹钟列表，Android 模拟器实拍":
+    "HushWake alarm list running on an Android emulator",
+  "闹钟列表 · Android 模拟器运行画面":
+    "Alarm list · running on an Android emulator",
+  悄醒助眠声音库与播放界面: "HushWake sound library and playback screen",
+  "助眠声音 · Android 模拟器运行画面":
+    "Sleep sounds · running on an Android emulator",
+  "AI 材料评审": "AI document review",
+  微信小程序: "WECHAT MINI-PROGRAM",
+  "别只说“再改改”，告诉我怎么改。":
+    "Don’t just say ‘try again’. Tell me what to change.",
+  "简历、汇报、文案、产品方案，交出去之前总想找人挑挑毛病。我做了四位性格不同的评审员，但每条意见都得说清楚：问题在哪、为什么、怎么改，改到什么程度就够了。":
+    "Before sending a résumé, report, copy, or product proposal, I like a second pair of eyes. I built four reviewers with different personalities, but each comment has to explain the issue, why it matters, what to change, and when it is good enough.",
+  别骂了产品截图待补充: "Bie Ma Le screenshots coming soon",
+  "简历、汇报、文案、产品四类评审":
+    "Four reviews: résumé, report, copy, and product",
+  "支持粘贴文字与 PDF / DOCX": "Paste text or upload a PDF / DOCX",
+  "引用原文，给出修改建议与验收标准":
+    "Quoted evidence, suggested edits, and acceptance criteria",
+  "微信小程序项目，已实现材料解析与评审流程。项目主页可查看介绍，暂未提供公开小程序体验入口。":
+    "A WeChat mini-program with document parsing and review implemented. The project website introduces it; no public mini-program trial link yet.",
+  查看项目: "Explore the project",
+  "Agent 桌面工作台": "Agent desktop workspace",
+  桌面项目: "DESKTOP PROJECT",
+  "给忙碌的 Agent，安排一个工位。": "A little desk for every busy agent.",
+  "同时开着几个命令行窗口，很容易忘了谁在忙什么。我把本地 Agent 搬进一间像素办公室：各有工位、各有任务，选中一个就能接着操作它的终端。做正经事，也可以有点好玩。":
+    "With several command-line windows open, it is easy to lose track. I moved my local agents into a pixel-art office: each gets a desk and a task, and selecting one brings its terminal back to hand. Serious work can have a playful side.",
+  胶囊办公室产品截图待补充: "Capsule Office screenshots coming soon",
+  "真实终端会话，可直接输入与接续操作":
+    "Real terminal sessions you can type into and continue",
+  "用工位和场景标签整理本地 Agent":
+    "Desks and task labels to organise local agents",
+  "切换界面主题，查看会话状态与用量":
+    "Switch themes and check session status and usage",
+  "Electron 本地桌面项目。真实终端运行在桌面端；用量区分实测、估算与缺失，暂未提供公开下载。":
+    "A local Electron desktop project. Live terminals run in the desktop app; usage distinguishes measured, estimated, and unavailable values. No public download yet.",
+  "基于开源 Drama Skills 的本地创作与流程调整，尚未公开成片。":
+    "Local creative work and workflow changes built on the open-source Drama Skills. No publicly released film yet.",
+  "把脑海里的画面，一点点做出来。":
+    "Bring the picture in my head a little closer.",
+  "图片哪里不对、镜头为什么接不上、音乐还差点什么——我常在这些地方反复试。于是把创意拆解、参考素材和真实反馈串起来，让下一次修改有个方向。":
+    "What feels wrong in an image? Why won’t two shots connect? What is the music missing? I keep returning to these questions, linking creative briefs, references, and feedback so the next revision has a direction.",
+  "一个创意、参考素材，或一版待修改的作品":
+    "An idea, references, or a piece to revise",
+  "视觉方案、分镜提示词、歌词与曲风方案":
+    "Visual direction, shot prompts, lyrics, and musical direction",
+  拆开创意: "Unpack the idea",
+  安排画面与声音: "Shape image & sound",
+  看效果再改: "Review & refine",
+  "图片、视频和音乐共用反馈流程；实际生成按任务接入相应工具。":
+    "Images, video, and music share a feedback loop; actual generation uses the tools chosen for each task.",
+  "投之前，先看清这份工作。": "Get to know the job before applying.",
+  "职位描述看起来都差不多，真正适不适合自己，还得一项项对照。我用 Career OS 找机会、核验职位，再拿已有经历和 JD 比一比，决定哪些值得继续聊。":
+    "Job descriptions can all start to sound alike. I use Career OS to find and verify opportunities, then compare each JD with my experience to decide which conversations are worth pursuing.",
+  "现有简历与求职条件，或一个具体 JD":
+    "A résumé and job preferences, or a specific JD",
+  "职位清单、匹配分析，按需调整的简历":
+    "A shortlist, fit analysis, and optional résumé edits",
+  找并核验职位: "Find & verify jobs",
+  对照自己的经历: "Compare experience",
+  按需调整简历: "Tailor if needed",
+  "先判断机会，确有需要再改简历；每处修改都要有真实经历支撑。":
+    "Assess the opportunity first, then edit the résumé if needed. Every change must be backed by real experience.",
   短剧创作: "Short drama desk",
   "故事写完以后，我还想看看它在画面里是什么样。借着开源 Drama Skills，我继续调整剧本、拆镜头、试关键帧，也把制作时踩过的坑补回本地流程。":
     "After writing a story, I want to see how it works on screen. Building on the open-source Drama Skills, I revise scripts, break down shots, try keyframes, and fold what I learn back into my local workflow.",

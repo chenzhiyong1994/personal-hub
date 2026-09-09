@@ -735,81 +735,20 @@
     color: var(--muted);
     font-size: 13px;
   }
-  .clock-art {
+  .screenshot-placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 17px;
-  }
-  .clock-art__brand {
-    font-size: 8px;
-    letter-spacing: 0.25em;
-  }
-  .clock-face {
-    position: relative;
-    width: 185px;
-    height: 185px;
-    border: 8px solid #f9eee4;
-    border-radius: 50%;
-    background: #fff9f0;
-    box-shadow:
-      5px 15px 20px #9e61441f,
-      inset 0 0 0 1px #e8d8c4;
-    color: #8f6950;
-    font: 14px/1 var(--serif);
-    transform: rotate(-10deg);
-  }
-  .clock-face__top {
-    position: absolute;
-    top: 13px;
-    left: calc(50% - 6px);
-  }
-  .clock-face__bottom {
-    position: absolute;
-    bottom: 11px;
-    left: calc(50% - 4px);
-  }
-  .clock-face__left {
-    position: absolute;
-    left: 14px;
-    top: calc(50% - 5px);
-  }
-  .clock-face__right {
-    position: absolute;
-    right: 14px;
-    top: calc(50% - 5px);
-  }
-  .clock-face i,
-  .clock-face b {
-    position: absolute;
-    left: calc(50% - 2px);
-    bottom: 50%;
-    width: 4px;
-    height: 57px;
-    border-radius: 5px;
-    background: #6d7864;
-    transform: rotate(180deg);
-    transform-origin: bottom;
-  }
-  .clock-face b {
-    height: 39px;
-    background: var(--accent);
-    transform: rotate(225deg);
-  }
-  .clock-face__pin {
-    position: absolute;
-    left: calc(50% - 5px);
-    top: calc(50% - 5px);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #9d6147;
-    border: 2px solid #f8e4c4;
-  }
-  .clock-art__time {
-    font: italic 23px/1 var(--serif);
-    color: #8e6c58;
+    gap: 18px;
+    width: min(72%, 330px);
+    min-height: 180px;
+    padding: 28px;
+    border: 1px dashed #9b8d8599;
+    border-radius: 4px;
+    color: #665e59;
+    font-size: 12px;
+    letter-spacing: 0.03em;
   }
   .archive {
     border-top: 1px solid var(--line);
@@ -890,9 +829,7 @@
     max-height: 570px;
     object-fit: contain;
   }
-  .project-dialog__visual .clock-art {
-    padding: 70px 0;
-  }
+
   .gallery-caption {
     width: 100%;
     display: flex;
@@ -968,7 +905,7 @@
   .system-row {
     display: grid;
     grid-template-columns: 165px 1.3fr 1fr;
-    gap: 42px;
+    gap: 28px 42px;
     padding-block: 39px;
     border-top: 1px solid #d9dcd1;
   }
@@ -1013,18 +950,48 @@
     line-height: 1.85;
     color: var(--muted);
   }
-  .system-flow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 23px;
+  .system-process {
+    grid-column: 2 / -1;
   }
-  .system-flow > span {
-    display: inline-flex;
+  .system-flow {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .system-flow > li {
+    position: relative;
+    display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 10px;
-    color: #6c765e;
+    gap: 14px;
+    min-height: 72px;
+    padding: 16px;
+    background: #fbfcf7;
+    border: 1px solid #cdd4c2;
+    border-radius: 4px;
+    color: #46543c;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .system-flow__number {
+    flex-shrink: 0;
+    font: italic 24px/1 var(--serif);
+    color: #879577;
+  }
+  .system-flow__arrow {
+    position: absolute;
+    right: -24px;
+    top: calc(50% - 9px);
+    color: #879577;
+  }
+  .system-note {
+    margin-top: 14px;
+    font-size: 11px;
+    line-height: 1.8;
+    color: #72786a;
   }
   .system-delivery {
     padding-left: 30px;
@@ -1043,49 +1010,18 @@
     margin-top: 5px;
     line-height: 1.75;
   }
-  .system-delivery summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .system-delivery > .text-link {
+    margin-top: 19px;
     font-size: 11px;
-    padding-block: 15px 8px;
-    margin-top: 14px;
-    border-top: 1px solid #d9dcd1;
   }
-  .system-example {
-    margin-top: 16px;
-    background: #fcfcf8;
-    padding: 20px;
-    border: 1px solid #d9dcd1;
-    border-radius: 3px;
-    box-shadow: 4px 4px 0 #e4e7dc;
+  .system-icon--3 {
+    background: #e6dfee;
+    color: #886c9b;
+    transform: rotate(3deg);
   }
-  .system-example > span {
-    font-size: 8px;
-    color: var(--muted);
-  }
-  .system-example h4 {
-    font-size: 15px;
-    margin: 12px 0;
-    line-height: 1.5;
-  }
-  .system-example ol {
-    padding-left: 0;
-    list-style: none;
-    font-size: 10px;
-  }
-  .system-example li {
-    padding-block: 8px;
-    border-top: 1px solid #ebece5;
-  }
-  .system-example p {
-    color: var(--muted);
-    font-size: 10px;
-    margin-top: 16px;
-  }
-  .system-example .text-link {
-    font-size: 10px;
-    margin-top: 12px;
+  .system-icon--4 {
+    background: #eee4ce;
+    color: #8b7547;
   }
   .impact__intro {
     display: grid;
@@ -1635,22 +1571,9 @@
     .project-cover__open > span {
       display: none;
     }
-    .clock-art {
-      gap: 12px;
-    }
-    .clock-face {
-      width: 150px;
-      height: 150px;
-      border-width: 6px;
-    }
-    .clock-face i {
-      height: 47px;
-    }
-    .clock-face b {
-      height: 32px;
-    }
-    .clock-art__time {
-      font-size: 20px;
+
+    .system-process {
+      grid-column: 1 / -1;
     }
     .system-row {
       grid-template-columns: 1.1fr 1fr;
@@ -1953,9 +1876,7 @@
     .project-dialog__visual > img {
       max-height: 340px;
     }
-    .project-dialog__visual .clock-art {
-      padding: 25px 0;
-    }
+
     .gallery-caption > p {
       font-size: 8px;
     }
@@ -2000,8 +1921,32 @@
       font-size: 12px;
     }
     .system-flow {
-      margin-top: 17px;
+      gap: 17px;
     }
+    .system-flow > li {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      min-height: 105px;
+      padding: 13px 10px;
+      font-size: 12px;
+    }
+    .system-flow__number {
+      font-size: 22px;
+    }
+    .system-flow__arrow {
+      right: -16px;
+      width: 13px;
+    }
+    .screenshot-placeholder {
+      min-height: 145px;
+      width: 76%;
+      font-size: 11px;
+    }
+    .system-process {
+      grid-row: 3;
+    }
+
     .system-delivery {
       border-left: 0;
       padding: 20px;
@@ -2014,9 +1959,7 @@
     .system-delivery > div + div {
       margin-top: 16px;
     }
-    .system-example {
-      padding: 17px;
-    }
+
     .section-head {
       margin-bottom: 30px;
       padding-top: 17px;

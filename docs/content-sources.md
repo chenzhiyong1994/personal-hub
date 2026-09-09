@@ -2,7 +2,7 @@
 
 最近履历复核：2026-09-07（公开创作渠道沿用既有记录，未在本轮重新核验）
 
-最近项目与素材复核：2026-09-08。新增及更新的 GitHub 仓库已确认公开；Content OS 的项目站返回 404，因此入口使用公开仓库。日跻与悄醒项目站返回 200，北页最新公开发行版为 v1.1.3。
+最近项目与素材复核：2026-09-09。本轮新增入口的 AIGC、Career OS 和别骂了 GitHub 仓库已确认公开。2026-09-08 核验：Content OS 的项目站返回 404，因此入口使用公开仓库；日跻与悄醒项目站返回 200，北页最新公开发行版为 v1.1.3。
 
 这份文档记录网站公开事实的来源、证据强度和未公开边界。它用于维护内容可信度，不是简历附件，也不是对外经营数据报告。
 
@@ -41,7 +41,7 @@
 
 项目事实来自作者拥有或有权审查的项目仓库、README、测试、素材和本地运行结果。公开页面采用保守状态描述：本地跑通不等于生产接入，自动化测试不等于真实用户采用，候选版本不等于正式发布。
 
-2026-09-08 梳理同级项目后的展示选择：
+2026-09-09 按作者补充要求更新后的展示选择：
 
 | 项目 | 当前依据与公开口径 | 展示选择 |
 | --- | --- | --- |
@@ -52,23 +52,27 @@
 | 心镜拾光 | 延续 v1.1 候选版本、78 张牌、本地历史与分享图的已有依据 | 保留互动作品；自我反思用途，不宣称预测或正式上线 |
 | 生者未明 | 延续 v0.4 可玩原型、NPC 状态、固定事实与 40 局种子验证的已有依据 | 保留叙事作品；不把自动验证写成真人采用 |
 
-AI Business Twin、Stack Trail、胶囊办公室和别骂了收进文字实验目录，保留用途，不继续占用同等级截图舞台。
+别骂了与胶囊办公室恢复为主要作品：前者依据 ../bie-ma-le/README.md 与 package.json，展示四类材料评审、文字与 PDF / DOCX 解析、原文证据和修改标准；未宣称小程序已公开上线。后者依据 ../capsule-office/package.json、src/App.jsx 与 electron/main.js，展示 Electron / 真实 PTY、本地 Agent 工位、场景标签与主题；用量区分实测、估算和缺失，不宣称已公开下载。两项均按作者要求使用明确的图片占位，等待作者提供素材。
+
+AI Business Twin、Stack Trail 保留在文字实验目录。
 
 PopLearn 仍处于封闭测试，且公开发布边界尚未完成，本轮不选为公开主作品；deepseek-harness 与 openclaw 不按作者自创产品展示；业务演示与重复清理副本不单独列为个人作品。
 
 ### 工作方式与归属
 
-- **Content OS**：以同级 content-os 当前 README 为依据，展示选题、研究、写作与校稿；样例是交付结构示意，不冒充一篇真实已生成文章。
-- **短剧创作**：同级 aigc-short-drama 来自开源 [Drama Skills](https://github.com/zenstory-ai/drama-skills)。本地分支包含作者的剧本、关键帧和流程调整；不把上游工作室履历和规模归于作者。页面摘录本地 projects/elevator-survival/剧集/EP001/剧本.md 的 R9《零号病床》，明确尚未公开成片。
-- **Product Manager**：以 README 和 examples/README.md 为依据；展示创建与审查两套工具。批量导出中的 500 条、权限、后台处理和一次重试来自仓库标注的虚构需求示例。
-- career-os、novelist 与 AIGC 的重复能力说明移出本章节；小说和音乐成果继续在创作区展示。
+- **Content OS**：以同级 content-os 当前 README 为依据，展示选题、研究、写作与校稿。
+- **短剧创作**：同级 aigc-short-drama 来自开源 [Drama Skills](https://github.com/zenstory-ai/drama-skills)。本地分支包含作者的剧本、关键帧和流程调整；不把上游工作室履历和规模归于作者，保留尚未公开成片的说明。
+- **Product Manager**：以 README 为依据；展示创建与审查两套工具，以及范围、规则和验收三个步骤。
+- **AIGC**：依据 ../aigc/README.md，展示图片、视频与音乐的创意拆解、素材安排、提示词和反馈修改；真实生成仍依赖任务所用工具，不把设计方案称为已生成成片。
+- **Career OS**：依据 ../career-os/README.md 的 job-search、jd-analyzer、resume-tailor 三个入口；先核验职位、对照经历，按需修改简历，不宣称具备持续监控、自动投递或产品 UI。不复用个人求职材料。
+- 按作者要求移除全部“翻一页看看”及样例展开，五套工作流程改为直接可见的编号步骤、输入、产出与项目链接。小说与音乐的具体成果仍在创作区展示。
 
 ### 当前页面图片来源
 
 - 北页：md/docs/screenshots/beiyemd-workspace.png → public/projects/beiyemd-clean.webp；示例文档，保留原始完整画面。
 - 日跻：riji-open-source/docs/assets 下 training.png、history.png、movements.png → 对应 WebP；原仓库明确为隔离预览中的虚构演示数据。
 - Cost Guard：cost-guard/docs/screenshots/settings-pricing.png → cost-guard-settings.webp；使用原始设置界面，未复用带标注箭头的 HUD 截图。
-- 悄醒：站内 CSS 闹钟概念插画，明确不是应用截图；旧的源码映射图已停用，避免继续传播过期音频行为。
+- 悄醒：本轮在只读 Android 16 模拟器会话运行 v0.4.8-beta，直接截取闹钟列表与助眠声音页面，转为 hushwake-alarms.webp 与 hushwake-sleep.webp。图片不包含鼠标或触摸指示点；模拟器演示数据不来自个人手机。替换此前 CSS 概念插画。
 - 心镜拾光：沿用项目原始卡牌素材 arcana-ritual.webp；不是运行截图。
 - 生者未明：沿用游戏开场截图 unverified-start.webp。
 - 所有本轮使用图片均逐张目视检查，未见自动化操作光标；新 PNG 只作 WebP 格式转换，不修改相邻项目源素材。

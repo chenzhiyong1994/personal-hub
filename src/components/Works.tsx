@@ -1,23 +1,24 @@
-import { ArrowUpRight, ChevronLeft, ChevronRight, Plus, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  ImagePlus,
+  Plus,
+  X,
+} from "lucide-react";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { archivedProjects, projects, type Project } from "../data/siteContent";
 import { useI18n, useLocalized } from "../i18n/i18n";
 import { Reveal } from "./Reveal";
 
-function ClockCover() {
+function ScreenshotPlaceholder() {
+  const { language } = useI18n();
   return (
-    <div className="clock-art" aria-hidden="true">
-      <span className="clock-art__brand">HUSHWAKE</span>
-      <div className="clock-face">
-        <span className="clock-face__top">12</span>
-        <span className="clock-face__right">3</span>
-        <span className="clock-face__bottom">6</span>
-        <span className="clock-face__left">9</span>
-        <i />
-        <b />
-        <span className="clock-face__pin" />
-      </div>
-      <span className="clock-art__time">a softer morning.</span>
+    <div className="screenshot-placeholder">
+      <ImagePlus size={32} strokeWidth={1.2} aria-hidden="true" />
+      <span>
+        {language === "zh" ? "产品截图待补充" : "Screenshots coming soon"}
+      </span>
     </div>
   );
 }
@@ -89,14 +90,14 @@ function ProjectDialog({
             {images.length > 0 ? (
               <img src={images[slide].src} alt={images[slide].alt} />
             ) : (
-              <ClockCover />
+              <ScreenshotPlaceholder />
             )}
             <div className="gallery-caption">
               <p>
                 {images[slide]?.caption ??
                   (zh
-                    ? "闹钟概念插画，非应用截图"
-                    : "Alarm illustration, not an app screenshot")}
+                    ? "图片稍后补上，先看看项目介绍。"
+                    : "Images will follow. Explore the project below.")}
               </p>
               {images.length > 1 && (
                 <div className="gallery-controls">
@@ -282,7 +283,7 @@ export function Works() {
                     decoding="async"
                   />
                 ) : (
-                  <ClockCover />
+                  <ScreenshotPlaceholder />
                 )}
                 <span className="project-cover__open">
                   <Plus size={19} />
@@ -312,8 +313,8 @@ export function Works() {
               {zh ? "早一些的小实验" : "Earlier experiments"}
               <small>
                 {zh
-                  ? "还有四个念头，留下了一些东西。"
-                  : "Four more ideas that left something behind."}
+                  ? "还有一些念头，留下了一些东西。"
+                  : "A few more ideas that left something behind."}
               </small>
             </span>
             <Plus size={20} />

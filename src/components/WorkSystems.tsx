@@ -1,16 +1,24 @@
 import {
   ArrowRight,
   ArrowUpRight,
+  BriefcaseBusiness,
   FileText,
   Film,
+  Palette,
   PenLine,
-  Plus,
 } from "lucide-react";
 import { workSystems } from "../data/siteContent";
 import { useI18n, useLocalized } from "../i18n/i18n";
 import { Reveal } from "./Reveal";
 
-const icons = [PenLine, Film, FileText];
+const icons: Record<string, typeof PenLine> = {
+  "content-os": PenLine,
+  "drama-skills": Film,
+  "product-manager": FileText,
+  aigc: Palette,
+  "career-os": BriefcaseBusiness,
+};
+
 export function WorkSystems() {
   const { language } = useI18n();
   const zh = language === "zh";
@@ -40,38 +48,31 @@ export function WorkSystems() {
             </h2>
             <p>
               {zh
-                ? "有些东西没有 App 图标，却会在做事时反复用到。我把写文章、做短剧、写需求里那些重复的步骤整理下来，让 AI 帮忙，也让自己少从头来过。"
-                : "Some of my most useful tools don’t have an app icon. These workflows gather the recurring steps in writing, short dramas, and product specs, with AI helping me start a little further along each time."}
+                ? "有些东西没有 App 图标，却会在做事时反复用到。从写作、创作到产品工作和找机会，我把常走的几条路整理下来，让 AI 帮忙，也让自己少从头来过。"
+                : "Some of my most useful tools don’t have an app icon. From writing and creative work to product specs and job searches, these are the paths I return to, with AI helping me start a little further along each time."}
             </p>
           </div>
         </Reveal>
         <div className="system-list">
           {systems.map((system, i) => {
-            const Icon = icons[i];
+            const Icon = icons[system.id] ?? FileText;
             return (
               <Reveal key={system.id}>
-                <article className="system-row">
+                <article
+                  className="system-row"
+                  aria-labelledby={`system-${system.id}`}
+                >
                   <div className="system-row__identity">
                     <span className={"system-icon system-icon--" + i}>
-                      <Icon size={26} strokeWidth={1.4} />
+                      <Icon size={26} strokeWidth={1.4} aria-hidden="true" />
                     </span>
                     <span className="eyebrow">
                       {system.index} / {system.name}
                     </span>
                   </div>
                   <div className="system-row__story">
-                    <h3>{system.role}</h3>
+                    <h3 id={`system-${system.id}`}>{system.role}</h3>
                     <p>{system.statement}</p>
-                    <div className="system-flow">
-                      {system.flow.map((step, index) => (
-                        <span key={step}>
-                          {step}
-                          {index < system.flow.length - 1 && (
-                            <ArrowRight size={13} />
-                          )}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                   <div className="system-delivery">
                     <div>
@@ -82,33 +83,43 @@ export function WorkSystems() {
                       <span>{zh ? "最后拿到" : "TAKE AWAY"}</span>
                       <p>{system.output}</p>
                     </div>
-                    <details>
-                      <summary>
-                        {zh ? "翻一页看看" : "Look inside"}
-                        <Plus size={17} />
-                      </summary>
-                      <div className="system-example">
-                        <span>{system.exampleLabel}</span>
-                        <h4>{system.exampleTitle}</h4>
-                        <ol>
-                          {system.example.map((line) => (
-                            <li key={line}>{line}</li>
-                          ))}
-                        </ol>
-                        <p>{system.note}</p>
-                        {system.link && (
-                          <a
-                            className="text-link"
-                            href={system.link}
-                            target="_blank"
-                            rel="noreferrer"
+                    {system.link && (
+                      <a
+                        className="text-link"
+                        href={system.link}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {zh ? "查看相关项目" : "Explore the project"}
+                        <ArrowUpRight size={15} aria-hidden="true" />
+                      </a>
+                    )}
+                  </div>
+                  <div className="system-process">
+                    <ol
+                      className="system-flow"
+                      aria-label={`${system.name} · ${zh ? "工作流程" : "Workflow"}`}
+                    >
+                      {system.flow.map((step, index) => (
+                        <li key={step}>
+                          <span
+                            className="system-flow__number"
+                            aria-hidden="true"
                           >
-                            {zh ? "查看相关项目" : "Explore the project"}
-                            <ArrowUpRight size={15} />
-                          </a>
-                        )}
-                      </div>
-                    </details>
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <span>{step}</span>
+                          {index < system.flow.length - 1 && (
+                            <ArrowRight
+                              className="system-flow__arrow"
+                              size={18}
+                              aria-hidden="true"
+                            />
+                          )}
+                        </li>
+                      ))}
+                    </ol>
+                    <p className="system-note">{system.note}</p>
                   </div>
                 </article>
               </Reveal>

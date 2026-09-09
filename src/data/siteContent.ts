@@ -6,7 +6,7 @@ export type Project = {
   category: string;
   group: "tools" | "play";
   status: string;
-  cover: "desktop" | "phone" | "clock" | "art" | "game";
+  cover: "desktop" | "phone" | "placeholder" | "art" | "game";
   tone: string;
   statement: string;
   description: string;
@@ -31,9 +31,6 @@ export type WorkSystem = {
   input: string;
   output: string;
   flow: string[];
-  exampleTitle: string;
-  exampleLabel: string;
-  example: string[];
   note: string;
   link?: string;
 };
@@ -164,12 +161,27 @@ export const projects: Project[] = [
     category: "闹钟与助眠",
     group: "tools",
     status: "v0.4.8 · BETA",
-    cover: "clock",
+    cover: "phone",
     tone: "peach",
     statement: "让入睡和醒来，都从容一点。",
     description:
       "睡前听一会儿雨声，早上按自己的节奏醒来。做悄醒时，我花了不少心思在声音该从哪里响起：戴着耳机时，连接断了就先停下来。",
-    imageAlt: "悄醒闹钟概念插画，非应用截图",
+    image: "/projects/hushwake-alarms.webp",
+    imageAlt: "悄醒闹钟列表，Android 模拟器实拍",
+    gallery: [
+      {
+        src: "/projects/hushwake-alarms.webp",
+        alt: "悄醒闹钟列表，Android 模拟器实拍",
+        caption: "闹钟列表 · Android 模拟器运行画面",
+        source: "runtime",
+      },
+      {
+        src: "/projects/hushwake-sleep.webp",
+        alt: "悄醒助眠声音库与播放界面",
+        caption: "助眠声音 · Android 模拟器运行画面",
+        source: "runtime",
+      },
+    ],
     features: [
       "单次与每周闹钟，支持稍后提醒",
       "八种自然声音，定时结束与淡出",
@@ -290,6 +302,58 @@ export const projects: Project[] = [
     links: [],
     index: "06",
   },
+  {
+    id: "bie-ma-le",
+    index: "07",
+    name: "别骂了",
+    enName: "Bie Ma Le",
+    category: "AI 材料评审",
+    group: "tools",
+    status: "微信小程序",
+    cover: "placeholder",
+    tone: "peach",
+    statement: "别只说“再改改”，告诉我怎么改。",
+    description:
+      "简历、汇报、文案、产品方案，交出去之前总想找人挑挑毛病。我做了四位性格不同的评审员，但每条意见都得说清楚：问题在哪、为什么、怎么改，改到什么程度就够了。",
+    imageAlt: "别骂了产品截图待补充",
+    features: [
+      "简历、汇报、文案、产品四类评审",
+      "支持粘贴文字与 PDF / DOCX",
+      "引用原文，给出修改建议与验收标准",
+    ],
+    boundary:
+      "微信小程序项目，已实现材料解析与评审流程。项目主页可查看介绍，暂未提供公开小程序体验入口。",
+    links: [
+      {
+        label: "查看项目",
+        href: "https://chenzhiyong1994.github.io/bie-ma-le/",
+      },
+      { label: "GitHub", href: "https://github.com/chenzhiyong1994/bie-ma-le" },
+    ],
+  },
+  {
+    id: "capsule-office",
+    index: "08",
+    name: "胶囊办公室",
+    enName: "Capsule Office",
+    category: "Agent 桌面工作台",
+    group: "tools",
+    status: "桌面项目",
+    cover: "placeholder",
+    tone: "lavender",
+    statement: "给忙碌的 Agent，安排一个工位。",
+    description:
+      "同时开着几个命令行窗口，很容易忘了谁在忙什么。我把本地 Agent 搬进一间像素办公室：各有工位、各有任务，选中一个就能接着操作它的终端。做正经事，也可以有点好玩。",
+    imageAlt: "胶囊办公室产品截图待补充",
+    features: [
+      "真实终端会话，可直接输入与接续操作",
+      "用工位和场景标签整理本地 Agent",
+      "切换界面主题，查看会话状态与用量",
+    ],
+    boundary:
+      "Electron 本地桌面项目。真实终端运行在桌面端；用量区分实测、估算与缺失，暂未提供公开下载。",
+    links: [],
+  },
 ];
 
 export const workSystems: WorkSystem[] = [
@@ -303,14 +367,6 @@ export const workSystems: WorkSystem[] = [
     input: "一个选题，或几条零散线索",
     output: "研究笔记、文章草稿、配图建议",
     flow: ["找线索", "核对资料", "写与修改"],
-    exampleTitle: "一篇文章的工作目录",
-    exampleLabel: "交付结构示意",
-    example: [
-      "01 选题：为什么值得写",
-      "02 资料：来源、事实与疑问",
-      "03 草稿：论点、故事与例子",
-      "04 校稿：语气、逻辑与出处",
-    ],
     note: "资料和初稿可以一起做，观点与最后一遍修改由我来。",
     link: "https://github.com/chenzhiyong1994/content-os",
   },
@@ -324,15 +380,7 @@ export const workSystems: WorkSystem[] = [
     input: "故事想法、小说片段或剧本",
     output: "剧本、视觉设定、分镜与图像／视频提示词",
     flow: ["写剧本", "定视觉", "拆镜头"],
-    exampleTitle: "剧本片段：零号病床",
-    exampleLabel: "本地创作 · EP001 / R9",
-    example: [
-      "黑暗中，病床脚轮滚过金属地面的声音由远及近。",
-      "系统广播：初始维生，七十二小时。",
-      "周衡：风险呢？",
-      "系统广播：无附加说明。",
-    ],
-    note: "在开源 Drama Skills 基础上做的本地创作与流程调整。这里展示剧本片段，尚未公开成片。",
+    note: "基于开源 Drama Skills 的本地创作与流程调整，尚未公开成片。",
     link: "https://github.com/zenstory-ai/drama-skills",
   },
   {
@@ -345,16 +393,34 @@ export const workSystems: WorkSystem[] = [
     input: "业务需求，或一份待审查的 PRD",
     output: "范围合适的 PRD、问题清单与验收标准",
     flow: ["理清范围", "补齐规则", "检查验收"],
-    exampleTitle: "功能示例：批量导出",
-    exampleLabel: "仓库中的虚构需求示例",
-    example: [
-      "权限：仅采购管理员可见",
-      "上限：一次最多选择 500 条",
-      "处理：后台导出，完成后通知发起人",
-      "异常：失败任务可重试一次",
-    ],
     note: "按需求大小决定文档深度；不确定的业务规则保留为待确认。",
     link: "https://github.com/chenzhiyong1994/product-manager",
+  },
+  {
+    id: "aigc",
+    index: "04",
+    name: "AIGC",
+    role: "把脑海里的画面，一点点做出来。",
+    statement:
+      "图片哪里不对、镜头为什么接不上、音乐还差点什么——我常在这些地方反复试。于是把创意拆解、参考素材和真实反馈串起来，让下一次修改有个方向。",
+    input: "一个创意、参考素材，或一版待修改的作品",
+    output: "视觉方案、分镜提示词、歌词与曲风方案",
+    flow: ["拆开创意", "安排画面与声音", "看效果再改"],
+    note: "图片、视频和音乐共用反馈流程；实际生成按任务接入相应工具。",
+    link: "https://github.com/chenzhiyong1994/AIGC",
+  },
+  {
+    id: "career-os",
+    index: "05",
+    name: "Career OS",
+    role: "投之前，先看清这份工作。",
+    statement:
+      "职位描述看起来都差不多，真正适不适合自己，还得一项项对照。我用 Career OS 找机会、核验职位，再拿已有经历和 JD 比一比，决定哪些值得继续聊。",
+    input: "现有简历与求职条件，或一个具体 JD",
+    output: "职位清单、匹配分析，按需调整的简历",
+    flow: ["找并核验职位", "对照自己的经历", "按需调整简历"],
+    note: "先判断机会，确有需要再改简历；每处修改都要有真实经历支撑。",
+    link: "https://github.com/chenzhiyong1994/career-os",
   },
 ];
 
@@ -366,14 +432,6 @@ export const archivedProjects = [
   {
     name: "Stack Trail",
     description: "记录练习过程，也给学习留下可回看的证据。",
-  },
-  {
-    name: "胶囊办公室",
-    description: "把终端与 Agent 状态装进一个像素办公室。",
-  },
-  {
-    name: "别骂了",
-    description: "把一句“再改改”，拆成有根据的修改建议。",
   },
 ];
 
